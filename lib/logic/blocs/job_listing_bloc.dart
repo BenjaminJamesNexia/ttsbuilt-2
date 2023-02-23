@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import '../states/job_listing_event.dart';
 
 class JobListingBloc extends Bloc<JobListingEvent, JobListingState>{
-  JobListingBloc(): super(JobListingState([])){
+  JobListingBloc(): super(JobListingState({})){
     on<LoadJobListing>(_loadJobListing);
     on<AddToJobListing>(_addToJobListing);
     on<RemoveFromJobListing>(_removeFromJobListing);

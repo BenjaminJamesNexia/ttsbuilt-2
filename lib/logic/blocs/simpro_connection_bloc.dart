@@ -7,7 +7,7 @@ import '../states/simpro_connection_event.dart';
 import '../states/simpro_connection_state.dart';
 
 class SimproConnectionBloc extends Bloc<SimproConnectionEvent, SimproConnectionState>{
-  SimproConnectionBloc(): super(SimproConnectionState(ConnectionAvailable.idle, ConnectionDirection.idle)){
+  SimproConnectionBloc(): super(SimproConnectionState(ConnectionAvailable.idle, ConnectionDirection.idle, "idle")){
     on<SuccessfulPullEvent>(_updateConnectionState);
     on<SuccessfulPushEvent>(_updateConnectionState);
     on<AttemptingPullEvent>(_updateConnectionState);

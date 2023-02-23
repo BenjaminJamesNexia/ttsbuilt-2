@@ -4,5 +4,6 @@ import 'connection_available.dart';
 class SimproConnectionState{
   ConnectionAvailable available;
   ConnectionDirection direction;
-  SimproConnectionState(this.available, this.direction);
+  String message;
+  SimproConnectionState(this.available, this.direction, this.message);
 }
