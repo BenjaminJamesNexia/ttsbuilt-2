@@ -11,11 +11,15 @@ class JobListingBloc extends Bloc<JobListingEvent, JobListingState>{
     on<UpdateListedJobs>(_updateJobListing);
   }
   void _loadJobListing(LoadJobListing event, Emitter<JobListingState> emit){
+    emit(event.getState());
   }
   void _addToJobListing(AddToJobListing event, Emitter<JobListingState> emit){
+    int sedf = 0;
   }
   void _removeFromJobListing(RemoveFromJobListing event, Emitter<JobListingState> emit){
+    int sedf = 0;
   }
   void _updateJobListing(UpdateListedJobs event, Emitter<JobListingState> emit){
+    int sedf = 0;
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ttsbuiltmobile/data/repositories/simpro_repository.dart';
 
 import 'interface/router/app_router.dart';
+import 'logic/blocs/job_listing_bloc.dart';
 import 'logic/blocs/simpro_connection_bloc.dart';
 import 'logic/blocs/user_bloc.dart';
 
@@ -29,6 +30,12 @@ class BlocApp extends StatelessWidget {
     UserBloc bloc = UserBloc();
     return bloc;
     },
+
+    child: BlocProvider<JobListingBloc>(
+    create: (BuildContext context) {
+    JobListingBloc bloc = JobListingBloc();
+    return bloc;
+    },
     child: MaterialApp(
       navigatorKey: SimproRepository.contextKey,
       title: 'TTS Simpro Data Capture',
@@ -38,6 +45,6 @@ class BlocApp extends StatelessWidget {
       ),
       onGenerateRoute: _appRouter.onGenerateRoute,
       initialRoute: AppRouter.jobListingPath
-    )));
+    ))));
   }
 }

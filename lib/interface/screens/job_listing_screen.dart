@@ -10,6 +10,7 @@ import '../../logic/blocs/user_bloc.dart';
 import '../../logic/states/job_state.dart';
 import '../../logic/states/simpro_connection_state.dart';
 import '../../logic/states/user_state.dart';
+import '../components/global.dart';
 
 class JobListingScreen extends StatelessWidget {
   @override
@@ -17,12 +18,7 @@ class JobListingScreen extends StatelessWidget {
     return RepositoryProvider<SimproRepository>(
         lazy: true,
         create: (context) => SimproRepository(),
-        child: BlocProvider<JobListingBloc>(
-            create: (BuildContext context) {
-              JobListingBloc bloc = JobListingBloc();
-              return bloc;
-            },
-            child: BlocProvider<ProcessingProgressBloc>(
+        child: BlocProvider<ProcessingProgressBloc>(
                 create: (BuildContext context) {
               ProcessingProgressBloc bloc = ProcessingProgressBloc();
               return bloc;
@@ -72,37 +68,96 @@ class JobListingScreen extends StatelessWidget {
                             width: size.width - 2 * borderWidth,
                             height: size.height - 2 * borderWidth,
                             child: Column(children: <Widget>[
-                              Row(children: <Widget>[
+                              Padding(
+                                  padding: new EdgeInsets.all(6.0),
+                              child: Container(
+                                  color: c2,
+                                  width: size.width - 40,
+                                  child:Padding(
+                                      padding: new EdgeInsets.all(4.0),
+                                    child: Row(
+                                  children: <Widget>[
                                 Image.asset(
                                     'assets/images/territory-trade-services-icon.png'),
-                                Text(userState.name, style: const TextStyle(color: Colors.white)),
-                              ]),
-                              BlocBuilder<ProcessingProgressBloc, ProcessingProgressState>(
-                                builder:(context, progressState){
-                                  return Visibility(
-                                      visible: progressState.numberToProcess == -1 ? false : progressState.numberProcessed == progressState.numberToProcess,
-                                      child: LinearProgressIndicator(
-                                      value: progressState.numberProcessed/progressState.numberToProcess,
-                                      semanticsLabel: 'Processing jobs',
-                                    ),
-                                  );
+                                Padding(
+                                    padding: new EdgeInsets.all(7.0),
+                                    child:Text(userState.name,
+                                    style:
+                                        const TextStyle(color: Colors.white, fontSize: 30))),
+                              ])))),
+                              BlocBuilder<ProcessingProgressBloc,
+                                      ProcessingProgressState>(
+                                  builder: (context, progressState) {
+                                bool visible = false;
+                                double progressValue = 1;
+                                if (progressState.numberToProcess > 0 &&
+                                    progressState.numberToProcess !=
+                                        progressState.numberProcessed) {
+                                  visible = true;
+                                  progressValue =
+                                      progressState.numberProcessed /
+                                          progressState.numberToProcess;
                                 }
-                              ),
+                                if (visible) {
+                                  return Text(progressState.numberProcessed.toString() + " job out of " + progressState.numberToProcess.toString(), style: TextStyle(color:Colors.white));
+                                } else {
+                                  return SizedBox.shrink();
+                                }
+                              }),
                               BlocBuilder<JobListingBloc, JobListingState>(
                                   builder: (context, jobListingState) {
                                 List<Widget> jobListing = [];
                                 Map<String, dynamic> jobs =
                                     jobListingState.jobs;
+                                int count = 0;
                                 for (String jobId in jobs.keys) {
+                                  if(jobId == "last-job-listing-date") continue;
+                                  Color backgroundColor = c3;
+                                  if(count.isEven) backgroundColor = c4;
                                   Map<String, dynamic> job = jobs[jobId];
-                                  jobListing.add(SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Column()));
+                                  List<Widget> jobDetailsColumnContents = [];
+                                  List<dynamic> timelines = job["timelines"];
+                                  String scheduledTime = "n/a";
+                                  for(Map<String, dynamic> timeline in timelines){
+                                    if(timeline.containsKey("Type") && timeline["Type"] == "Schedule"){
+                                      if(timeline["Staff"]["ID"] == userBloc.state.id){
+                                        scheduledTime = timeline["Message"];
+                                      }
+                                    }
+                                  }
+                                  String site = "n/a";
+                                  if(job.containsKey("details") && job["details"].containsKey("Site")) site = job["details"]["Site"]["Name"];
+                                  String item = "n/a";
+                                  if(job.containsKey("schedule-items-listing")){
+                                    item = job["schedule-items-listing"][0];
+                                  }
+
+                                  jobDetailsColumnContents.add(
+                                    Container(
+                                      width: size.width - 30,
+                                      child: Card(
+                                    color: backgroundColor,
+                                    child: new Padding(
+                                      padding: new EdgeInsets.all(7.0),
+                                      child: new Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(scheduledTime, style: TextStyle(color: Colors.white, backgroundColor: backgroundColor)),
+                                          Text(site, style: TextStyle(color: Colors.white, backgroundColor: backgroundColor)),
+                                          Text(item, style: TextStyle(color: Colors.white, backgroundColor: backgroundColor))
+                                        ],
+                                      ),
+                                    ),
+                                  ))
+                                  );
+                                  jobListing.add(Column(children: jobDetailsColumnContents));
+                                  count++;
                                 }
-                                return Column(children: jobListing);
+                                //return Text("in bloc", style: TextStyle(color: Colors.white));
+                                return Expanded(child:ListView( children: jobListing, scrollDirection: Axis.vertical,));
                               }),
                             ]))));
               });
-            }))));
+            })));
   }
 }

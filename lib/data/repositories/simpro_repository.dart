@@ -33,6 +33,8 @@ class SimproRepository {
   Map<String, dynamic> jobs = {};
   String lastJobListingDate = "n/a";
 
+  bool refreshingJobListing = false;
+
   SimproRepository._privateConstructor() {
     createUserEvent();
   }
@@ -86,17 +88,26 @@ class SimproRepository {
 
   refreshJobListing(BuildContext context) async {
 
+    if(refreshingJobListing) return;
+    refreshingJobListing = true;
+
     //companyJobsRequest.addHeader("If-Modified-Since", lastJobListingDate);
     Map<String, dynamic> jobStates = {};
 
-    if(jobs.isEmpty && 1 == 2) {
+    if(jobs.isEmpty) {
       Map<String, dynamic> persistedData = await persistence
           .getJobListingFromFile();
-      if (persistedData.isNotEmpty) {
+      if (persistedData.isNotEmpty && persistedData.length > 1) {
         lastJobListingDate = persistedData["last-job-listing-date"];
         jobs = persistedData;
         jobStates = jobs;
+        JobListingState newState = JobListingState(jobStates);
+        JobListingEvent jobListingEvent = LoadJobListing(newState);
+        JobListingBloc listingBloc = BlocProvider.of<JobListingBloc>(context);
+        listingBloc.add(jobListingEvent);
       }
+    }else{
+      jobStates = jobs;
     }
 
     OAuth2Helper oauth2Helper = OAuth2Helper(client,
@@ -247,6 +258,7 @@ class SimproRepository {
     JobListingEvent jobListingEvent = LoadJobListing(newState);
     JobListingBloc listingBloc = BlocProvider.of<JobListingBloc>(context);
     listingBloc.add(jobListingEvent);
+    refreshingJobListing = false;
   }
 
   refreshJobDetails(int jobId) async {
