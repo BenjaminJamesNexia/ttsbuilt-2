@@ -10,7 +10,6 @@ import '../../logic/blocs/job_listing_bloc.dart';
 import '../../logic/blocs/user_bloc.dart';
 import '../../logic/states/connection_available.dart';
 import '../../logic/states/job_listing_state.dart';
-import '../../logic/states/job_state.dart';
 import '../../logic/states/simpro_connection_event.dart';
 import '../../logic/states/simpro_connection_state.dart';
 import '../../logic/states/user_event.dart';
