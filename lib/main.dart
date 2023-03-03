@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ttsbuiltmobile/data/repositories/schedule_repository.dart';
 import 'package:ttsbuiltmobile/data/repositories/simpro_repository.dart';
 
 import 'interface/router/app_router.dart';
@@ -30,7 +31,11 @@ class BlocApp extends StatelessWidget {
     UserBloc bloc = UserBloc();
     return bloc;
     },
-
+    child: RepositoryProvider<ScheduleRepository>(
+    create: (BuildContext context) {
+    ScheduleRepository scheduleRepository = ScheduleRepository();
+    return scheduleRepository;
+    },
     child: BlocProvider<JobListingBloc>(
     create: (BuildContext context) {
     JobListingBloc bloc = JobListingBloc();
@@ -45,6 +50,6 @@ class BlocApp extends StatelessWidget {
       ),
       onGenerateRoute: _appRouter.onGenerateRoute,
       initialRoute: AppRouter.jobListingPath
-    ))));
+    )))));
   }
 }

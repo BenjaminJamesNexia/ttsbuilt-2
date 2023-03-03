@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:html/dom.dart';
 import 'package:ttsbuiltmobile/data/repositories/persistence.dart';
+import 'package:ttsbuiltmobile/data/repositories/schedule_repository.dart';
 import 'package:ttsbuiltmobile/logic/blocs/processing_progress_bloc.dart';
 import 'package:ttsbuiltmobile/logic/blocs/simpro_connection_bloc.dart';
 import 'package:ttsbuiltmobile/logic/states/connection_direction.dart';
@@ -14,10 +16,12 @@ import '../../logic/states/simpro_connection_event.dart';
 import '../../logic/states/simpro_connection_state.dart';
 import '../../logic/states/user_event.dart';
 import '../../logic/states/user_state.dart';
+import '../utility/job_detail_note.dart';
 import '../utility/simpro_oauth2_client.dart';
 import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 import 'package:http/http.dart' as http;
+import 'package:html/parser.dart' show parse;
 
 SimproOAuth2Client client = SimproOAuth2Client(
     redirectUri: 'com.nexiaem.ttsbuiltmobile://oauth2redirect',
@@ -92,6 +96,8 @@ class SimproRepository {
 
     //companyJobsRequest.addHeader("If-Modified-Since", lastJobListingDate);
     Map<String, dynamic> jobStates = {};
+
+    ScheduleRepository scheduleRepo = RepositoryProvider.of<ScheduleRepository>(context);
 
     if(jobs.isEmpty) {
       Map<String, dynamic> persistedData = await persistence
@@ -210,6 +216,43 @@ class SimproRepository {
         int startPos = startingDivLength;
         String iterationNote = notes;
 
+        var document = parse(notes);
+        NodeList documentNodes = document.firstChild!.nodes[1].nodes;
+        if(documentNodes[0].nodes.length > 1) documentNodes = documentNodes[0].nodes;
+        List<String> scheduleItemListing = [];
+        for(var node in documentNodes){
+          String? thisText = node.text;
+          if(thisText != null){
+            int end = thisText.length - 1;
+            int spacePos = thisText.indexOf(" ");
+            if(spacePos > 0){
+              String firstWord = thisText.substring(0, spacePos);
+              if(firstWord.length > 5) firstWord = firstWord.substring(0,5);
+              if(scheduleRepo.isAnItemCode(firstWord)){
+                var item = scheduleRepo.getItem(firstWord);
+                scheduleItemListing.add(item!["Code"]! + " " + item!["Task"]!);
+              }else{
+                int secondSpacePos = thisText.indexOf(" ", spacePos + 1);
+                if(secondSpacePos > spacePos + 1) {
+                  String secondWord = thisText.substring(
+                      spacePos + 1, thisText.indexOf(" ", spacePos + 1));
+                  if (secondWord.length > 5)
+                    secondWord = secondWord.substring(0, 5);
+                  if (scheduleRepo.isAnItemCode(secondWord)) {
+                    var item = scheduleRepo.getItem(secondWord);
+                    scheduleItemListing.add(
+                        item!["Code"]! + " " + item!["Task"]!);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        job["schedule-item-listing-2"] = scheduleItemListing;
+
+        var innerText = document.firstChild!.text;
+
         if(iterationNote.startsWith("<div")){
           while(iterationNote.startsWith("<div")) {
             int endPos = iterationNote.length - 7;
@@ -257,6 +300,9 @@ class SimproRepository {
     JobListingEvent jobListingEvent = LoadJobListing(newState);
     JobListingBloc listingBloc = BlocProvider.of<JobListingBloc>(context);
     listingBloc.add(jobListingEvent);
+    processingState = ProcessingProgressState(-1, 0);
+    processingEvent = ProcessingProgressEvent(processingState);
+    processingBloc.add(processingEvent);
     refreshingJobListing = false;
   }
 
@@ -297,5 +343,37 @@ class SimproRepository {
     } else {
       detailsNotesArray.add(iterationNote);
     }
+  }
+
+  appendJobDetailNotes(int id, List<JobDetailNote> notesToAppend) async{
+    Map<String, String> headers = {};
+    headers["Accept"] = "*/*";
+    headers["Content-Type"] = "application/json";
+    try {
+      String link =
+          "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
+              id.toString();
+
+      OAuth2Helper oauth2Helper = OAuth2Helper(client,
+          grantType: OAuth2Helper.AUTHORIZATION_CODE,
+          clientId: '216db2b119c178035694d36ee1b90b',
+          clientSecret: 'ac0f1b5725');
+
+      http.Response resp = await oauth2Helper.get(link, headers: headers);
+      Map<String, dynamic> jobDetails = jsonDecode(resp.body);
+
+      var existingNotes = StringBuffer(jobDetails["Notes"]);
+      for (JobDetailNote thisNote in notesToAppend) {
+        existingNotes.write(thisNote.getJobDetailToAppend());
+      }
+      Map<String, dynamic> dataToUpdate = {};
+      dataToUpdate["Notes"] = existingNotes.toString();
+      String jobDataPatchLink = "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" + id.toString();
+      http.Response patchResult = await oauth2Helper.patch(jobDataPatchLink, headers: headers, body: jsonEncode(dataToUpdate));
+      println(patchResult);
+    } catch (IOException | URISyntaxException ex) {
+    Logger.getLogger(SimproDataSetter.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
   }
 }

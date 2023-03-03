@@ -24585,5 +24585,10 @@ class ScheduleRepository{
     return subsectionLists[subSection];
   }
 
+  bool isAnItemCode(String maybeACode){
+    if(itemCodeMap.containsKey(maybeACode)) return true;
+    return false;
+  }
+
 }
 
