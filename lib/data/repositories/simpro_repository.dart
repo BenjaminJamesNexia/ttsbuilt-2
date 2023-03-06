@@ -346,6 +346,8 @@ class SimproRepository {
   }
 
   appendJobDetailNotes(int id, List<JobDetailNote> notesToAppend) async{
+    //for testing just use the test id
+    id = 3000837;
     Map<String, String> headers = {};
     headers["Accept"] = "*/*";
     headers["Content-Type"] = "application/json";
@@ -353,27 +355,26 @@ class SimproRepository {
       String link =
           "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
               id.toString();
-
       OAuth2Helper oauth2Helper = OAuth2Helper(client,
           grantType: OAuth2Helper.AUTHORIZATION_CODE,
           clientId: '216db2b119c178035694d36ee1b90b',
           clientSecret: 'ac0f1b5725');
-
+      AccessTokenResponse? accessTokenResponse = await oauth2Helper.getToken();
+      String? accessToken = accessTokenResponse?.accessToken;
       http.Response resp = await oauth2Helper.get(link, headers: headers);
-      Map<String, dynamic> jobDetails = jsonDecode(resp.body);
-
+      Map<dynamic, dynamic> jobDetails = jsonDecode(resp.body);
       var existingNotes = StringBuffer(jobDetails["Notes"]);
       for (JobDetailNote thisNote in notesToAppend) {
         existingNotes.write(thisNote.getJobDetailToAppend());
       }
-      Map<String, dynamic> dataToUpdate = {};
-      dataToUpdate["Notes"] = existingNotes.toString();
+      String bodyString = "{\"Notes\":\"" + existingNotes.toString().replaceAll("\"", "\\\"") + "\"}";
       String jobDataPatchLink = "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" + id.toString();
-      http.Response patchResult = await oauth2Helper.patch(jobDataPatchLink, headers: headers, body: jsonEncode(dataToUpdate));
-      println(patchResult);
-    } catch (IOException | URISyntaxException ex) {
-    Logger.getLogger(SimproDataSetter.class.getName()).log(Level.SEVERE, null, ex);
+      http.Response patchResult = await oauth2Helper.patch(jobDataPatchLink, headers: headers, body: bodyString);
+      if(patchResult.statusCode != 204) {
+        debugPrint(patchResult.toString());
+      }
+    } catch (ex) {
+      debugPrint(ex.toString());
     }
-  }
   }
 }

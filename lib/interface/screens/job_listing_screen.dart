@@ -15,10 +15,7 @@ import '../router/app_router.dart';
 class JobListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<SimproRepository>(
-        lazy: true,
-        create: (context) => SimproRepository(),
-        child: BlocProvider<ProcessingProgressBloc>(
+    return BlocProvider<ProcessingProgressBloc>(
             create: (BuildContext context) {
           ProcessingProgressBloc bloc = ProcessingProgressBloc();
           return bloc;
@@ -196,6 +193,6 @@ class JobListingScreen extends StatelessWidget {
                           }),
                         ]))));
           });
-        })));
+        }));
   }
 }

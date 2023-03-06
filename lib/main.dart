@@ -31,6 +31,9 @@ class BlocApp extends StatelessWidget {
     UserBloc bloc = UserBloc();
     return bloc;
     },
+    child: RepositoryProvider<SimproRepository>(
+    lazy: true,
+    create: (context) => SimproRepository(),
     child: RepositoryProvider<ScheduleRepository>(
     create: (BuildContext context) {
     ScheduleRepository scheduleRepository = ScheduleRepository();
@@ -50,6 +53,6 @@ class BlocApp extends StatelessWidget {
       ),
       onGenerateRoute: _appRouter.onGenerateRoute,
       initialRoute: AppRouter.jobListingPath
-    )))));
+    ))))));
   }
 }

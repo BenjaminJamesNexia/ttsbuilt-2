@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:html/dom.dart' as htmlDom;
 import 'package:html/parser.dart' show parse;
+import 'package:ttsbuiltmobile/data/repositories/simpro_repository.dart';
 import 'package:ttsbuiltmobile/data/utility/job_detail_note.dart';
 import 'package:ttsbuiltmobile/logic/blocs/simpro_connection_bloc.dart';
 import 'package:ttsbuiltmobile/logic/states/simpro_connection_state.dart';
@@ -10,6 +11,7 @@ import '../../data/repositories/schedule_repository.dart';
 import '../../logic/blocs/job_listing_bloc.dart';
 import '../../logic/blocs/user_bloc.dart';
 import '../../logic/states/connection_available.dart';
+import '../../logic/states/job_listing_event.dart';
 import '../../logic/states/job_listing_state.dart';
 import '../../logic/states/user_state.dart';
 import '../components/global.dart';
@@ -62,7 +64,7 @@ class WorkNotesScreen extends StatelessWidget {
           return BlocBuilder<JobListingBloc, JobListingState>(
               builder: (context, jobListingState) {
                 Map<String,dynamic> thisJob = jobListingState.jobs[jobId.toString()];
-                var document = parse(thisJob["details"]["Notes"]);
+                htmlDom.Document document = parse(thisJob["details"]["Notes"]);
                 List<TextNode> startVal = [];
                 List<TextNode> workNoteText = getNodeText(startVal, document);
                 htmlDom.NodeList documentNodes = document.firstChild!.nodes[1].nodes;
@@ -101,7 +103,7 @@ class WorkNotesScreen extends StatelessWidget {
                         child:TextField(
                           controller: textController,
                           style: defaultTextStyle,
-                          onEditingComplete: () => saveNewNote(context)
+                          onEditingComplete: () => saveNewNote(context, document)
                         ))
                 );
 
@@ -174,14 +176,44 @@ class WorkNotesScreen extends StatelessWidget {
     }
   }
 
-  void saveNewNote(BuildContext context)  {
+  void saveNewNote(BuildContext context, htmlDom.Document document)  async{
     String currentText = textController!.text;
+    if(currentText == defaultTextCaptureValue) return;
     if(currentText.isNotEmpty && currentText.trim().length > 0){
       UserBloc user = BlocProvider.of<UserBloc>(context);
       UserState userState = user.state;
-      JobDetailNote firstNote = JobDetailNote(userState.name + (DateFormat("dd/MM/yyyy").format(DateTime.now()) + " - Work Note"), JobDetailStyle.strong);
+      JobDetailNote firstNote = JobDetailNote(userState.name + " (" + (DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now()) + ") - Work Note"), JobDetailStyle.strong);
       JobDetailNote secondNote = JobDetailNote(currentText, JobDetailStyle.normal);
       List<JobDetailNote> notesToAdd = [firstNote, secondNote];
+      SimproRepository simproRep = RepositoryProvider.of<SimproRepository>(context);
+      await simproRep.appendJobDetailNotes(jobId, notesToAdd);
+      JobListingBloc listingBloc = BlocProvider.of<JobListingBloc>(context);
+      String existingNotes = document.outerHtml;
+      //String prefix <html><head></head><body> and suffix <div>&nbsp;</div></body></html>
+      if(existingNotes.startsWith("<html><head></head><body>")){
+        existingNotes = existingNotes.substring(25);
+      }else{
+        debugPrint(existingNotes);
+      }
+
+      if(existingNotes.endsWith("<div>&nbsp;</div></body></html>")){
+        existingNotes = existingNotes.substring(0, existingNotes.length - 31);
+      }else{
+        debugPrint(existingNotes);
+      }
+      StringBuffer updatedNotesBuffer = StringBuffer(existingNotes);
+      for (JobDetailNote thisNote in notesToAdd) {
+        updatedNotesBuffer.write(thisNote.getJobDetailToAppend());
+      }
+      Map<String, dynamic> jobUpdateSkeleton = {};
+      jobUpdateSkeleton[jobId.toString()] = {};
+      jobUpdateSkeleton[jobId.toString()]["details"] = {};
+      jobUpdateSkeleton[jobId.toString()]["details"]["Notes"] = updatedNotesBuffer.toString();
+      JobListingState updateState = JobListingState(jobUpdateSkeleton);
+      UpdateListedJobs updateEvent = UpdateListedJobs(updateState);
+      listingBloc.add(updateEvent);
+      textController!.text = defaultTextCaptureValue;
+      FocusScope.of(context).unfocus();
     }
   }
 

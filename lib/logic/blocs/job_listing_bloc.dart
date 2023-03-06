@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:ttsbuiltmobile/logic/states/job_listing_state.dart';
 import 'package:bloc/bloc.dart';
 
@@ -19,7 +20,24 @@ class JobListingBloc extends Bloc<JobListingEvent, JobListingState>{
   void _removeFromJobListing(RemoveFromJobListing event, Emitter<JobListingState> emit){
     int sedf = 0;
   }
+
+  //The event state here contains just the things to update, so apply that to the current state and then emit it
   void _updateJobListing(UpdateListedJobs event, Emitter<JobListingState> emit){
-    int sedf = 0;
+    Map<String, dynamic> currentState = this.state.jobs;
+    Map<String, dynamic> stateUpdates = event.getState().jobs;
+    for(String jobId in stateUpdates.keys){
+      var thisJob = stateUpdates[jobId];
+      for(String fieldToUpdate in thisJob.keys){
+        //The details field will have sub-fields, whereas other fields will not
+        if(fieldToUpdate == "details"){
+          for(String detailField in thisJob["details"].keys){
+            currentState[jobId]["details"][detailField] = stateUpdates[jobId]["details"][detailField];
+          }
+        }else{
+          currentState[jobId][fieldToUpdate] = stateUpdates[jobId][fieldToUpdate];
+        }
+      }
+    }
+    emit(state);
   }
 }
