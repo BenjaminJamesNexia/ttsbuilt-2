@@ -11,3 +11,10 @@ class JobIDs{
   final int jobId;
   JobIDs(this.companyId, this.jobId);
 }
+
+class WorkNoteID{
+  final int companyId;
+  final int jobId;
+  final int workNoteId;
+  WorkNoteID(this.companyId, this.jobId, this.workNoteId);
+}

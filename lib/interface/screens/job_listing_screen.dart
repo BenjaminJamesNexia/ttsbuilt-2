@@ -138,9 +138,14 @@ class JobListingScreen extends StatelessWidget {
                               if (job.containsKey("details") &&
                                   job["details"].containsKey("Site"))
                                 site = job["details"]["Site"]["Name"];
-                              String item = "n/a";
-                              if (job.containsKey("schedule-items-listing")) {
+                              var item = null;
+                              if (job.containsKey("schedule-items-listing") && job["schedule-items-listing"].length > 0) {
                                 item = job["schedule-items-listing"][0];
+                                if(item.runtimeType != "String"){
+                                  item = item["schedule-reference-item"]["Code"] + ": " + item["schedule-reference-item"]["Task"];
+                                }
+                              }else{
+                                continue;
                               }
 
                               jobDetailsColumnContents.add(Container(

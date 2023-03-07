@@ -187,7 +187,7 @@ class SimproRepository {
         List<dynamic> timelines = jsonDecode(resp.body);
         bool scheduledForThisUser = false;
         for (Map<String, dynamic> timeline in timelines) {
-          if (timeline["Type"] == "Schedule" &&
+          if (timeline["Type"] == "Schedule" && timeline.containsKey("Staff") && timeline["Staff"].containsKey("ID") &&
               timeline["Staff"]["ID"] == userBloc.state.id) {
             scheduledForThisUser = true;
           }
@@ -201,6 +201,36 @@ class SimproRepository {
             .now()
             .millisecondsSinceEpoch;
 
+        link =
+            "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
+                id.toString() + "/notes/";
+
+        resp = await oauth2Helper.get(link, headers: headers);
+
+        var jobNotes = jsonDecode(resp.body);
+        job["schedule-items-listing"] = [];
+        for(var jobNote in jobNotes) {
+          String? thisSubject = jobNote["Subject"];
+          int thisID = jobNote["ID"];
+          if (thisSubject != null) {
+            int spacePos = thisSubject.indexOf(" ");
+            if (spacePos > 0) {
+              String firstWord = thisSubject.substring(0, spacePos);
+              if (firstWord.length > 5) firstWord = firstWord.substring(0, 5);
+              if (scheduleRepo.isAnItemCode(firstWord)) {
+                //Then this is a job note that we want to set as a schedule item
+                var scheduleItem = {};
+                scheduleItem["work-note-id"] = thisID;
+                var item = scheduleRepo.getItem(firstWord);
+                scheduleItem["schedule-reference-item"] = item;
+                if(jobNote["Note"] != null && jobNote["Note"].length > 0){
+                  scheduleItem["Note"] = jobNote["Note"];
+                }
+                job["schedule-items-listing"].add(scheduleItem);
+              }
+            }
+          }
+        }
         String description = job["Description"];
         link =
             "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
@@ -273,8 +303,6 @@ class SimproRepository {
         }else{
           detailsNotesArray.add(iterationNote);
         }
-
-        job["schedule-items-listing"] = detailsNotesArray;
 
         jobStates[job["ID"].toString()] = job;
         jobsProcessed++;

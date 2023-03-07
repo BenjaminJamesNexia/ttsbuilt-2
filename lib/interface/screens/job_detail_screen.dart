@@ -203,7 +203,7 @@ class JobDetailScreen extends StatelessWidget {
                               child: GestureDetector(
                             onTap: () {
                               Navigator.of(context).pushNamed(
-                                  AppRouter.workNotesPath,
+                                  AppRouter.itemListingPath,
                                   arguments: JobIDs(0, thisJob["ID"]));
                             },
                             child: Column(
