@@ -46,20 +46,36 @@ class ItemListingScreen extends StatelessWidget {
       return BlocBuilder<JobListingBloc, JobListingState>(
           builder: (context, jobListingState) {
         Map<String, dynamic> thisJob = jobListingState.jobs[jobId.toString()];
+        int rootSpotlessScheduleId = -1;
         List<Widget> scheduleItems = [];
-        if (thisJob.containsKey("schedule-items-listing")) {
+        if (thisJob.containsKey("schedule-item-listing")) {
           //For each item, materials and photos can be listed
           //Notes will have a subject starting with an item code,
           // and where this is the case the notes will be a json string with properties
           // attachments and
           // materials
           // each containing an array of items input by the technician
-          for (var item in thisJob["schedule-items-listing"]) {
-            for(int i = 0; i < 33; i++) {
+
+          for (var item in thisJob["schedule-item-listing"]) {
+            // for(int i = 0; i < 33; i++) {
               scheduleItems.add(getItemListing(item, size, context, jobId));
+              if(rootSpotlessScheduleId == -1) rootSpotlessScheduleId = item["work-note-id"];
               scheduleItems.add(SizedBox(height: 8));
+            // }
+          }
+
+          if(scheduleItems.isEmpty){
+            if(thisJob.containsKey("schedule-item-listing-2") && thisJob["schedule-item-listing-2"].isNotEmpty){
+              String firstItem = thisJob["schedule-item-listing-2"][0];
+              int spacePos = firstItem.indexOf(" ");
+              if (spacePos > 0) {
+                String firstWord = firstItem.substring(0, spacePos);
+                if (firstWord.length > 5) firstWord = firstWord.substring(0, 5);
+
+              }
             }
           }
+
         } else {
           if (thisJob.containsKey("schedule-item-listing-2")) {}
         }
@@ -74,32 +90,7 @@ class ItemListingScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      Padding(
-                          padding: new EdgeInsets.all(6.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: c2,
-                                  border: Border.all(
-                                    color: c2,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: Padding(
-                                  padding: new EdgeInsets.all(4.0),
-                                  child: Row(children: <Widget>[
-                                    Image.asset(
-                                        'assets/images/territory-trade-services-icon.png'),
-                                    Spacer(),
-                                    Padding(
-                                        padding: new EdgeInsets.all(7.0),
-                                        child: Text(
-                                            thisJob["details"]["Site"]["Name"],
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 30))),
-                                    Spacer(),
-                                  ])))),
-
+                      getJobHeader(size, thisJob),
                       SizedBox(height: 8),
                       Container(
                           decoration: BoxDecoration(
@@ -123,7 +114,7 @@ class ItemListingScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pushNamed(
                           AppRouter.spotlessScheduleItemSelectionScreen,
-                          arguments: JobIDs(0, thisJob["ID"]));
+                          arguments: WorkNoteID(0, thisJob["ID"], rootSpotlessScheduleId));
                     },
                     child:Container(
                       height: 26,

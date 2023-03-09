@@ -115,6 +115,7 @@ class SimproRepository {
       jobStates = jobs;
     }
 
+
     OAuth2Helper oauth2Helper = OAuth2Helper(client,
         grantType: OAuth2Helper.AUTHORIZATION_CODE,
         clientId: '216db2b119c178035694d36ee1b90b',
@@ -208,7 +209,7 @@ class SimproRepository {
         resp = await oauth2Helper.get(link, headers: headers);
 
         var jobNotes = jsonDecode(resp.body);
-        job["schedule-items-listing"] = [];
+        job["schedule-item-listing"] = [];
         for(var jobNote in jobNotes) {
           String? thisSubject = jobNote["Subject"];
           int thisID = jobNote["ID"];
@@ -226,7 +227,7 @@ class SimproRepository {
                 if(jobNote["Note"] != null && jobNote["Note"].length > 0){
                   scheduleItem["Note"] = jobNote["Note"];
                 }
-                job["schedule-items-listing"].add(scheduleItem);
+                job["schedule-item-listing"].add(scheduleItem);
               }
             }
           }

@@ -59,40 +59,7 @@ class DescriptionDetailScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      Padding(
-                          padding: new EdgeInsets.all(6.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: c2,
-                                  border: Border.all(
-                                    color: c2,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              width: size.width - 40,
-                              child: Padding(
-                                  padding: new EdgeInsets.all(4.0),
-                                  child: Row(children: <Widget>[
-                                    Image.asset(
-                                        'assets/images/territory-trade-services-icon.png'),
-                                    Spacer(),
-                                    Padding(
-                                        padding: EdgeInsets.all(7.0),
-                                        child: Container(
-                                            constraints: BoxConstraints(
-                                              maxWidth: size.width - 130,
-                                            ),
-                                            child: SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: Text(
-                                                    thisJob["details"]["Site"]
-                                                        ["Name"],
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 30))))),
-                                    Spacer(),
-                                  ])))),
+                      getJobHeader(size, thisJob),
                       Container(
                           width: size.width - 30,
                           height: size.height - 152,

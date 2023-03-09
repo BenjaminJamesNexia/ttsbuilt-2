@@ -24558,6 +24558,7 @@ class ScheduleRepository{
 
   Map<String, Map<String, String>> itemCodeMap = Map<String, Map<String, String>>();
   Map<String, List<Map<String, String>>> subsectionLists = Map<String, List<Map<String, String>>>();
+  Map<String, List<Map<String, String>>> categoryLists = Map<String, List<Map<String, String>>>();
 
   ScheduleRepository(){
     _setupMaps();
@@ -24573,22 +24574,35 @@ class ScheduleRepository{
           thisList.add(listing);
           subsectionLists[listing["Subsection"]!] = thisList;
         }
+        if(listing.containsKey("Category")) {
+          List<Map<String, String>> thisList = [];
+          if (categoryLists.containsKey(listing["Category"])) thisList = categoryLists[listing["Category"]]!;
+          thisList.add(listing);
+          categoryLists[listing["Category"]!] = thisList;
+        }
       }
     }
   }
 
-  Map<String, String>? getItem(String itemCode){
-    return itemCodeMap[itemCode];
+  List<Map<String,String>> scheduleItemList() {
+    return _scheduleDataList;
+  }
+    Map<String, String>? getItem(String itemCode){
+      if(itemCodeMap.containsKey(itemCode)) return itemCodeMap[itemCode];
+      return null;
+    }
+
+    List<Map<String, String>>? getSubsectionList(String subSection){
+      return subsectionLists[subSection];
+    }
+
+  List<Map<String, String>>? getCategoryList(String category){
+    return categoryLists[category];
   }
 
-  List<Map<String, String>>? getSubsectionList(String subSection){
-    return subsectionLists[subSection];
+    bool isAnItemCode(String maybeACode){
+      if(itemCodeMap.containsKey(maybeACode)) return true;
+      return false;
+    }
   }
-
-  bool isAnItemCode(String maybeACode){
-    if(itemCodeMap.containsKey(maybeACode)) return true;
-    return false;
-  }
-
-}
 

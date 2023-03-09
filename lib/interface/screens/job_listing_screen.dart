@@ -65,31 +65,7 @@ class JobListingScreen extends StatelessWidget {
                         width: size.width - 2 * borderWidth,
                         height: size.height - 2 * borderWidth,
                         child: Column(children: <Widget>[
-                          Padding(
-                              padding: new EdgeInsets.all(6.0),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: c2,
-                                      border: Border.all(
-                                        color: c2,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5))),
-                                  width: size.width - 40,
-                                  child: Padding(
-                                      padding: new EdgeInsets.all(4.0),
-                                      child: Row(children: <Widget>[
-                                        Image.asset(
-                                            'assets/images/territory-trade-services-icon.png'),
-                                        Spacer(),
-                                        Padding(
-                                            padding: new EdgeInsets.all(7.0),
-                                            child: Text(userState.name,
-                                                style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 30))),
-                                        Spacer(),
-                                      ])))),
+                          getUserHeader(size, userState),
                           BlocBuilder<ProcessingProgressBloc,
                                   ProcessingProgressState>(
                               builder: (context, progressState) {
@@ -139,8 +115,8 @@ class JobListingScreen extends StatelessWidget {
                                   job["details"].containsKey("Site"))
                                 site = job["details"]["Site"]["Name"];
                               var item = null;
-                              if (job.containsKey("schedule-items-listing") && job["schedule-items-listing"].length > 0) {
-                                item = job["schedule-items-listing"][0];
+                              if (job.containsKey("schedule-item-listing") && job["schedule-item-listing"].length > 0) {
+                                item = job["schedule-item-listing"][0];
                                 if(item.runtimeType != "String"){
                                   item = item["schedule-reference-item"]["Code"] + ": " + item["schedule-reference-item"]["Task"];
                                 }
@@ -150,6 +126,9 @@ class JobListingScreen extends StatelessWidget {
 
                               jobDetailsColumnContents.add(Container(
                                   width: size.width - 30,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 2, color: c2),
+                                  ),
                                   child: GestureDetector(
                                     onTap: (){
                                       Navigator.of(context)
@@ -187,14 +166,23 @@ class JobListingScreen extends StatelessWidget {
                                   ))));
                               jobListing.add(
                                   Column(children: jobDetailsColumnContents));
+                              jobListing.add(SizedBox(height: 5));
                               count++;
                             }
                             //return Text("in bloc", style: TextStyle(color: Colors.white));
-                            return Expanded(
-                                child: ListView(
-                              children: jobListing,
-                              scrollDirection: Axis.vertical,
-                            ));
+                            return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(width: 2, color: c2),
+                                ),
+                                padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
+                                constraints: BoxConstraints(
+                                  maxWidth: size.width - 30,
+                                  maxHeight: size.height - 153,
+                                ),
+                                child: SingleChildScrollView(
+                                    child:Column(children: jobListing)
+                                )
+                            );
                           }),
                         ]))));
           });

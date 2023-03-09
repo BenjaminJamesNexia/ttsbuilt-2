@@ -59,6 +59,7 @@ class JobDetailScreen extends StatelessWidget {
         List<Widget> scheduleItemsList = [];
         scheduleItemsList.add(Container(
             width: size.width - 30,
+            height: 22,
             color: c3,
             child: Padding(
                     padding: new EdgeInsets.fromLTRB(7, 3, 3, 3),
@@ -110,46 +111,14 @@ class JobDetailScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      Padding(
-                          padding: new EdgeInsets.all(6.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: c2,
-                                  border: Border.all(
-                                    color: c2,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              width: size.width - 39,
-                              child: Padding(
-                                  padding: new EdgeInsets.all(4.0),
-                                  child: Row(children: <Widget>[
-                                    Image.asset(
-                                        'assets/images/territory-trade-services-icon.png'),
-                                    Spacer(),
-                                    Padding(
-                                        padding: new EdgeInsets.all(7.0),
-                                        child: Container(
-                                            constraints: BoxConstraints(
-                                              maxWidth: size.width - 130,
-                                            ),
-                                            child: SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: Text(
-                                                    thisJob["details"]["Site"]
-                                                        ["Name"],
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 30))))),
-                                    Spacer(),
-                                  ])))),
+                      getJobHeader(size, thisJob),
                       Container(
-                          constraints: BoxConstraints(
-                            maxHeight: 1.5 * (size.height - headerHeight) / 3,
-                            minWidth: size.width - 30,
-                            maxWidth: size.width - 30,
+                          decoration: BoxDecoration(
+                            color: c3,
+                            border: Border.all(width: 2, color: c2),
                           ),
+                          height: 1.5 * (size.height - headerHeight) / 3,
+                          width: size.width - 30,
                           child: SingleChildScrollView(
                               child: GestureDetector(
                                   onTap: () {
@@ -157,20 +126,20 @@ class JobDetailScreen extends StatelessWidget {
                                         AppRouter.descriptionDetailPath,
                                         arguments: JobIDs(0, thisJob["ID"]));
                                   },
-                                  child: Card(
-                                    color: c3,
-                                    child: new Padding(
+                                  child: Padding(
                                         padding: new EdgeInsets.all(7.0),
                                         child: descriptionHTML
                                     ),
-                                  )))),
-                      SizedBox(height: 5),
+                                  ))),
+                      SizedBox(height: 7),
                       Container(
-                          constraints: BoxConstraints(
-                            maxHeight: 1 * (size.height - headerHeight) / 3,
-                            minWidth: size.width - 30,
-                            maxWidth: size.width - 30,
+
+                          decoration: BoxDecoration(
+                            color: c4,
+                            border: Border.all(width: 2, color: c2),
                           ),
+                          height: 1 * (size.height - headerHeight) / 3,
+                          width: size.width - 30,
                           child: SingleChildScrollView(
                               child: GestureDetector(
                             onTap: () {
@@ -178,38 +147,32 @@ class JobDetailScreen extends StatelessWidget {
                                   AppRouter.workNotesPath,
                                   arguments: JobIDs(0, thisJob["ID"]));
                             },
-                            child: Card(
-                                color: c4,
-                                child: new Padding(
+                            child: Padding(
                                     padding: new EdgeInsets.all(7.0),
                                     child: workNotesHTML)),
-                          ))),
-                      SizedBox(height: 5),
+                          )),
+                      SizedBox(height: 7),
+
                       Container(
-                          margin: new EdgeInsets.fromLTRB(11.0, 5, 11, 0),
                           decoration: BoxDecoration(
-                              color: c3,
-                              border: Border.all(
-                                color: c3,
-                              ),
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(5))),
-                          constraints: BoxConstraints(
-                            maxHeight: 0.5 * (size.height - headerHeight) / 3,
-                            minWidth: size.width - 30,
-                            maxWidth: size.width - 30,
+                            color: c3,
+                            border: Border.all(width: 2, color: c2),
                           ),
+                          height: 10 + 0.5 * (size.height - headerHeight) / 3,
+                          width: size.width - 30,
                           child: SingleChildScrollView(
                               child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                  AppRouter.itemListingPath,
-                                  arguments: JobIDs(0, thisJob["ID"]));
-                            },
-                            child: Column(
-                              children: scheduleItemsList
-                            )
-                          )))
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                        AppRouter.itemListingPath,
+                                        arguments: JobIDs(0, thisJob["ID"]));
+                                  },
+                                  child: Column(
+                                      children: scheduleItemsList
+                                  )
+                              ))),
+
+
                     ]))));
       });
     });
