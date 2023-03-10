@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../logic/states/user_state.dart';
 
 Color c1 = Color.fromRGBO(220, 126, 34, 1);
+Color c1_darker = Color.fromRGBO(176, 102, 28, 0);
 Color c2 = Color.fromRGBO(220, 163, 34, 1);
 Color c3 = Color.fromRGBO(38, 62, 149, 1);
 Color c3_light = Color.fromRGBO(244, 231, 255, 1);
@@ -26,9 +27,9 @@ Widget _getHeader(Size size, String text){
       padding: new EdgeInsets.all(6.0),
       child: Container(
           decoration: BoxDecoration(
-              color: c2,
+              color: c4,
               border: Border.all(
-                color: c2,
+                color: c3,
               ),
               borderRadius:
               BorderRadius.all(Radius.circular(1))),
@@ -37,7 +38,7 @@ Widget _getHeader(Size size, String text){
               padding: new EdgeInsets.all(4.0),
               child: Row(children: <Widget>[
                 Image.asset(
-                    'assets/images/territory-trade-services-icon.png'),
+                    'assets/images/territory-trade-services-icon.png', height: 30),
                 Spacer(),
                 Container(
                     width: size.width - 120,
@@ -48,7 +49,7 @@ Widget _getHeader(Size size, String text){
                             text,
                             style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 30)))),
+                                fontSize: 25)))),
                 Spacer(),
               ]))));
 }
@@ -61,3 +62,7 @@ Widget getJobHeader(Size size, thisJob){
   return _getHeader(size, thisJob["details"]["Site"]["Name"]);
 }
 
+TextStyle defaultTextStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 18
+);

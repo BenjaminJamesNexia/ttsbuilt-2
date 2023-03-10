@@ -115,7 +115,6 @@ class SimproRepository {
       jobStates = jobs;
     }
 
-
     OAuth2Helper oauth2Helper = OAuth2Helper(client,
         grantType: OAuth2Helper.AUTHORIZATION_CODE,
         clientId: '216db2b119c178035694d36ee1b90b',
@@ -184,7 +183,15 @@ class SimproRepository {
         jobDetailStartTime = DateTime
             .now()
             .millisecondsSinceEpoch;
-        resp = await oauth2Helper.get(link, headers: headers);
+        try{
+          resp = await oauth2Helper.get(link, headers: headers);
+        }catch(ex){
+          print("Error thrown in refreshJobListing - caught so it can be retried after a pause");
+          print(ex.toString());
+          await Future.delayed(
+              Duration(milliseconds:300));
+          resp = await oauth2Helper.get(link, headers: headers);
+        }
         List<dynamic> timelines = jsonDecode(resp.body);
         bool scheduledForThisUser = false;
         for (Map<String, dynamic> timeline in timelines) {
@@ -405,5 +412,39 @@ class SimproRepository {
     } catch (ex) {
       debugPrint(ex.toString());
     }
+  }
+
+  ///The item should be a Map<String, String> - it seems to get a _Map<String, String> in the screen and not sure how to handle that so used var here
+  ///as it seems to work for both
+  Future<int> addAWorkNoteScheduleItem(int id, var item) async{
+    //for testing just use the test id
+    id = 3000837;
+    Map<String, String> headers = {};
+    headers["Accept"] = "*/*";
+    headers["Content-Type"] = "application/json";
+    Map<String, String> body = {};
+    body["Subject"] = item["Code"]! + " " + item["Task"]!;
+    String bodyString = jsonEncode(body);
+    try {
+      String link =
+          "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
+              id.toString() + "/notes/";
+      OAuth2Helper oauth2Helper = OAuth2Helper(client,
+          grantType: OAuth2Helper.AUTHORIZATION_CODE,
+          clientId: '216db2b119c178035694d36ee1b90b',
+          clientSecret: 'ac0f1b5725');
+      http.Response postResult = await oauth2Helper.post(link, headers: headers, body: bodyString);
+      if(postResult.statusCode != 201) {
+        debugPrint(postResult.toString());
+      }else{
+        debugPrint(postResult.toString());
+        Map<String, dynamic> responseJSON = jsonDecode(postResult.toString());
+        return responseJSON["ID"];
+      }
+
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+    return -1;
   }
 }

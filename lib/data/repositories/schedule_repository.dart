@@ -20779,42 +20779,42 @@ var _scheduleDataList = [
     "Task": "Bath Reno To 6m2 New Shower",
     "Further details": "\"This item is for a complete bathroom renovation for the removal of an existing shower area and installing a new shower in same location for a bathroom up to 6m2, including all sanitary ware, and renewing all fittings, fixtures and material components for the installation of the following as per SAHA NATSPEC and SAHA generic design guidelines for house renovations. Inclusive of wall basin (5l), towel rails, shower curtain rails and support, bathroom mirror cabinet (750mm), soap holder, all concealed pipework, all tapware and breeching pieces, shower rose, double power point, light switch, wall or ceiling exhaust fan, floor levelling, floor grates and puddle flanges, waterproofing, wall and floor tiles, grout and silicone sealants, door stop, minor wall patching, internal painting of walls, ceiling, door, door and window frames and architraves, the reinstatement of disability modifications, and final clean."
   },
-  {
-    "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens and basin vanity units where present."
-  },
-  {
-    "Prefix": "Provide a stepless shower entry, including minor floor patching and scabbling floor to achieve required falls. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
-  },
-  {
-    "Prefix": "Make good any hard plaster, or section of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails, as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan."
-  },
-  {
-    "Prefix": "Install new ceiling mounted light fitting (batten holder). Final clean."
-  },
-  {
-    "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
-  },
-  {
-    "Prefix": "Complete concrete floor removal and replacement use cn codes"
-  },
-  {
-    "Prefix": "Renewing floor drains use PD codes"
-  },
-  {
-    "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
-  },
-  {
-    "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
-  },
-  {
-    "Prefix": "Renewal and/or relocation of windows use cy codes."
-  },
-  {
-    "Prefix": "Mould treatment use ip codes."
-  },
-  {
-    "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
-  },
+  // {
+  //   "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens and basin vanity units where present."
+  // },
+  // {
+  //   "Prefix": "Provide a stepless shower entry, including minor floor patching and scabbling floor to achieve required falls. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
+  // },
+  // {
+  //   "Prefix": "Make good any hard plaster, or section of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails, as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan."
+  // },
+  // {
+  //   "Prefix": "Install new ceiling mounted light fitting (batten holder). Final clean."
+  // },
+  // {
+  //   "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
+  // },
+  // {
+  //   "Prefix": "Complete concrete floor removal and replacement use cn codes"
+  // },
+  // {
+  //   "Prefix": "Renewing floor drains use PD codes"
+  // },
+  // {
+  //   "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
+  // },
+  // {
+  //   "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
+  // },
+  // {
+  //   "Prefix": "Renewal and/or relocation of windows use cy codes."
+  // },
+  // {
+  //   "Prefix": "Mould treatment use ip codes."
+  // },
+  // {
+  //   "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
+  // },
   {
     "Prefix": "Venting to atmosphere of exhaust fan - check roof design and ceiling space first. Fit flue only where required as per SAHA NATSPEC.\"",
     "Category": "ea",
@@ -20831,42 +20831,42 @@ var _scheduleDataList = [
     "Task": "Bath Reno To 9m2 New Shower",
     "Further details": "\"This item is for a complete bathroom renovation for the removal of an existing shower area and installing a new shower in same location for a bathroom greater than 6m2 up to 9m2, including all sanitary ware, and renewing all fittings, fixtures and material components for the installation of the following as per SAHA NATSPEC and SAHA generic design guidelines for house renovations. Inclusive of wall basin (5l), towel rails, shower curtain rails and support, bathroom mirror cabinet (750mm), soap holder, all concealed pipework, all tapware and breeching pieces, shower rose, double power point, light switch, wall or ceiling exhaust fan, floor levelling, floor grates and puddle flanges, waterproofing, wall and floor tiles, grout and silicone sealants, door stop, minor wall patching, internal painting of walls, ceiling, door, door and window frames and architraves, the reinstatement of disability modifications, and final clean."
   },
-  {
-    "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens and basin vanity units where present."
-  },
-  {
-    "Prefix": "Provide a stepless shower entry, including minor floor patching and scabbling floor to achieve required falls. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
-  },
-  {
-    "Prefix": "Make good any hard plaster, or sections of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails, as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan."
-  },
-  {
-    "Prefix": "Install new ceiling mounted light fitting (batten holder). Final clean."
-  },
-  {
-    "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
-  },
-  {
-    "Prefix": "Complete concrete floor removal and replacement use cn codes"
-  },
-  {
-    "Prefix": "Renewing floor drains use PD codes"
-  },
-  {
-    "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
-  },
-  {
-    "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
-  },
-  {
-    "Prefix": "Renewal and/or relocation of windows use cy codes."
-  },
-  {
-    "Prefix": "Mould treatment use ip codes."
-  },
-  {
-    "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
-  },
+  // {
+  //   "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens and basin vanity units where present."
+  // },
+  // {
+  //   "Prefix": "Provide a stepless shower entry, including minor floor patching and scabbling floor to achieve required falls. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
+  // },
+  // {
+  //   "Prefix": "Make good any hard plaster, or sections of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails, as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan."
+  // },
+  // {
+  //   "Prefix": "Install new ceiling mounted light fitting (batten holder). Final clean."
+  // },
+  // {
+  //   "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
+  // },
+  // {
+  //   "Prefix": "Complete concrete floor removal and replacement use cn codes"
+  // },
+  // {
+  //   "Prefix": "Renewing floor drains use PD codes"
+  // },
+  // {
+  //   "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
+  // },
+  // {
+  //   "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
+  // },
+  // {
+  //   "Prefix": "Renewal and/or relocation of windows use cy codes."
+  // },
+  // {
+  //   "Prefix": "Mould treatment use ip codes."
+  // },
+  // {
+  //   "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
+  // },
   {
     "Prefix": "Venting to atmosphere of exhaust fan - check roof design and ceiling space first. Fit flue only where required as per SAHA NATSPEC.\"",
     "Category": "ea",
@@ -20883,39 +20883,39 @@ var _scheduleDataList = [
     "Task": "Bath Reno To 6m2 Bath With Shower Over",
     "Further details": "\"This item is for a complete bathroom renovation for the removal of existing bath with shower over bath and install new bath and shower (over bath) in same location for a bathroom up to 6m2, including all sanitary ware, and renewing all fittings, fixtures and material components for the installation of the following as per SAHA NATSPEC and SAHA generic design guidelines for house renovations. Inclusive of bath, wall basin (5l), towel rails, shower curtain rails and support, bathroom mirror cabinet (750mm), soap holder, all concealed pipework, all tapware and breeching pieces, shower rose, double power point, light switch, wall or ceiling exhaust fan, floor levelling, floor grate and puddle flange, waterproofing, wall and floor tiles, grout and silicone sealants, door stop, minor wall patching, internal painting of walls, ceiling, door, door and window frames and architraves, the reinstatement of disability modifications, and final clean. "
   },
-  {
-    "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
-  },
-  {
-    "Prefix": "Supply and install a new bath with shower to existing waste, including minor floor patching and scabbling floor to achieve required falls. Supply and install puddle flange."
-  },
-  {
-    "Prefix": "Make good any hard plaster or sections of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
-  },
-  {
-    "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
-  },
-  {
-    "Prefix": "Complete concrete floor removal and replacement use cn codes"
-  },
-  {
-    "Prefix": "Renewing floor drains use PD codes"
-  },
-  {
-    "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
-  },
-  {
-    "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
-  },
-  {
-    "Prefix": "Renewal and/or relocation of windows use cy codes."
-  },
-  {
-    "Prefix": "Mould treatment use ip codes."
-  },
-  {
-    "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
-  },
+  // {
+  //   "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
+  // },
+  // {
+  //   "Prefix": "Supply and install a new bath with shower to existing waste, including minor floor patching and scabbling floor to achieve required falls. Supply and install puddle flange."
+  // },
+  // {
+  //   "Prefix": "Make good any hard plaster or sections of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
+  // },
+  // {
+  //   "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
+  // },
+  // {
+  //   "Prefix": "Complete concrete floor removal and replacement use cn codes"
+  // },
+  // {
+  //   "Prefix": "Renewing floor drains use PD codes"
+  // },
+  // {
+  //   "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
+  // },
+  // {
+  //   "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
+  // },
+  // {
+  //   "Prefix": "Renewal and/or relocation of windows use cy codes."
+  // },
+  // {
+  //   "Prefix": "Mould treatment use ip codes."
+  // },
+  // {
+  //   "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
+  // },
   {
     "Prefix": "Venting to atmosphere of exhaust fan - check roof design and ceiling space first. Fit flue only where required as per SAHA NATSPEC.\"",
     "Category": "ea",
@@ -20932,39 +20932,39 @@ var _scheduleDataList = [
     "Task": "Bath Reno To 9m2 New Bath With Shower Over",
     "Further details": "\"This item is for a complete bathroom renovation for the removal of an existing bath with shower over bath and install new bath and shower (over bath) in same location for a bathroom greater than 6m2 up to 9m2, including all sanitary ware, and renewing all fittings, fixtures and material components for the installation of the following as per SAHA NATSPEC and SAHA generic design guidelines for house renovations. Inclusive of bath, wall basin (5l), towel rails, shower curtain rails and support, bathroom mirror cabinet (750mm), soap holder, all concealed pipework, all tapware and breeching pieces, shower rose, double power point, light switch, wall or ceiling exhaust fan, floor levelling, floor grate and puddle flange, waterproofing, wall and floor tiles, grout and silicone sealants, door stop, minor wall patching, internal painting of walls, ceiling, door, door and window frames and architraves, the reinstatement of disability modifications, and final clean."
   },
-  {
-    "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
-  },
-  {
-    "Prefix": "Supply and install a new bath with shower to existing waste, including minor floor patching and scabbling floor to achieve required falls. Supply and install puddle flange."
-  },
-  {
-    "Prefix": "Make good any hard plaster or sections of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
-  },
-  {
-    "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
-  },
-  {
-    "Prefix": "Complete concrete floor removal and replacement use cn codes"
-  },
-  {
-    "Prefix": "Renewing floor drains use PD codes"
-  },
-  {
-    "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
-  },
-  {
-    "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
-  },
-  {
-    "Prefix": "Renewal and/or relocation of windows use cy codes."
-  },
-  {
-    "Prefix": "Mould treatment use ip codes."
-  },
-  {
-    "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
-  },
+  // {
+  //   "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
+  // },
+  // {
+  //   "Prefix": "Supply and install a new bath with shower to existing waste, including minor floor patching and scabbling floor to achieve required falls. Supply and install puddle flange."
+  // },
+  // {
+  //   "Prefix": "Make good any hard plaster or sections of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
+  // },
+  // {
+  //   "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
+  // },
+  // {
+  //   "Prefix": "Complete concrete floor removal and replacement use cn codes"
+  // },
+  // {
+  //   "Prefix": "Renewing floor drains use PD codes"
+  // },
+  // {
+  //   "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
+  // },
+  // {
+  //   "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
+  // },
+  // {
+  //   "Prefix": "Renewal and/or relocation of windows use cy codes."
+  // },
+  // {
+  //   "Prefix": "Mould treatment use ip codes."
+  // },
+  // {
+  //   "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
+  // },
   {
     "Prefix": "Venting to atmosphere of exhaust fan - check roof design and ceiling space first. Fit flue only where required as per SAHA NATSPEC\"",
     "Category": "ea",
@@ -20981,36 +20981,36 @@ var _scheduleDataList = [
     "Task": "Bath Reno 6m2 New Bath With Separate Shower",
     "Further details": "\"This item is for a complete bathroom renovation for the removal of existing bath with shower over bath, or removal of a bath with a separate shower and install a new bath in same location with separate shower area for a bathroom up to 6m2, including all sanitary ware, and renewing all fittings, fixtures and material components for the installation of the following as per SAHA NATSPEC and SAHA generic design guidelines for house renovations. Inclusive of bath, wall basin (5l), towel rails, shower curtain rails and/or shower screen, bathroom mirror cabinet (750mm), soap holders, all concealed pipework, all tapware and breeching pieces, shower rose, double power point, light switch, wall or ceiling exhaust fan, floor levelling, floor grates and puddle flanges, waterproofing, wall and floor tiles, grout and silicone sealants, door stop, minor wall patching, internal painting of walls, ceiling, door, door and window frames and architraves, the reinstatement of disability modifications, and final clean."
   },
-  {
-    "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
-  },
-  {
-    "Prefix": "Supply and install a new bath to existing waste, including minor floor patching and scabbling floor to achieve required falls to provide stepless shower entry for shower area. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
-  },
-  {
-    "Prefix": "Make good any hard plaster or section of wall linings, note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
-  },
-  {
-    "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
-  },
-  {
-    "Prefix": "Complete concrete floor removal and replacement use cn codes"
-  },
-  {
-    "Prefix": "Renewing floor drains and install of new shower area drain use PD codes"
-  },
-  {
-    "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
-  },
-  {
-    "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
-  },
-  {
-    "Prefix": "Renewal and/or relocation of windows use cy codes."
-  },
-  {
-    "Prefix": "Mould treatment use ip codes."
-  },
+  // {
+  //   "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
+  // },
+  // {
+  //   "Prefix": "Supply and install a new bath to existing waste, including minor floor patching and scabbling floor to achieve required falls to provide stepless shower entry for shower area. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
+  // },
+  // {
+  //   "Prefix": "Make good any hard plaster or section of wall linings, note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
+  // },
+  // {
+  //   "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
+  // },
+  // {
+  //   "Prefix": "Complete concrete floor removal and replacement use cn codes"
+  // },
+  // {
+  //   "Prefix": "Renewing floor drains and install of new shower area drain use PD codes"
+  // },
+  // {
+  //   "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
+  // },
+  // {
+  //   "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
+  // },
+  // {
+  //   "Prefix": "Renewal and/or relocation of windows use cy codes."
+  // },
+  // {
+  //   "Prefix": "Mould treatment use ip codes."
+  // },
   {
     "Prefix": "Venting to atmosphere of exhaust fan - check roof design and ceiling space first. Fit flue only where required as per SAHA NATSPEC.\"",
     "Category": "ea",
@@ -21027,36 +21027,36 @@ var _scheduleDataList = [
     "Task": "Bath Reno 9m2 New Bath With Separate Shower",
     "Further details": "\"This item is for a complete bathroom renovation for the removal of existing bath with shower over bath, or removal of a bath with a separate shower and install a new bath in same location with separate shower area for a bathroom greater than 6m2 up to 9m2, including all sanitary ware, and renewing all fittings, fixtures and material components for the installation of the following as per SAHA NATSPEC and SAHA generic design guidelines for house renovations. Inclusive of bath, wall basin (5l), towel rails, shower curtain rails and/or shower screen, bathroom mirror cabinet (750mm), soap holders, all concealed pipework, all tapware and breeching pieces, shower rose, double power point, light switch, wall or ceiling exhaust fan, floor levelling, floor grates and puddle flanges, waterproofing, wall and floor tiles, grout and silicone sealants, door stop, minor wall patching, internal painting of walls, ceiling, door, door and window frames and architraves, the reinstatement of disability modifications, and final clean."
   },
-  {
-    "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
-  },
-  {
-    "Prefix": "Supply and install a new bath to existing waste, including minor floor patching and scabbling floor to achieve required falls to provide stepless shower entry for shower area. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
-  },
-  {
-    "Prefix": "Make good any hard plaster or section of wall linings, note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
-  },
-  {
-    "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
-  },
-  {
-    "Prefix": "Complete concrete floor removal and replacement use cn codes"
-  },
-  {
-    "Prefix": "Renewing floor drains and install of new shower area drain use PD codes"
-  },
-  {
-    "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
-  },
-  {
-    "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
-  },
-  {
-    "Prefix": "Renewal and/or relocation of windows use cy codes."
-  },
-  {
-    "Prefix": "Mould treatment use ip codes."
-  },
+  // {
+  //   "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
+  // },
+  // {
+  //   "Prefix": "Supply and install a new bath to existing waste, including minor floor patching and scabbling floor to achieve required falls to provide stepless shower entry for shower area. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
+  // },
+  // {
+  //   "Prefix": "Make good any hard plaster or section of wall linings, note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of all disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
+  // },
+  // {
+  //   "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
+  // },
+  // {
+  //   "Prefix": "Complete concrete floor removal and replacement use cn codes"
+  // },
+  // {
+  //   "Prefix": "Renewing floor drains and install of new shower area drain use PD codes"
+  // },
+  // {
+  //   "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
+  // },
+  // {
+  //   "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
+  // },
+  // {
+  //   "Prefix": "Renewal and/or relocation of windows use cy codes."
+  // },
+  // {
+  //   "Prefix": "Mould treatment use ip codes."
+  // },
   {
     "Prefix": "Venting to atmosphere of exhaust fan - check roof design and ceiling space first. Fit flue only where required as per SAHA NATSPEC.\"",
     "Category": "ea",
@@ -21073,36 +21073,36 @@ var _scheduleDataList = [
     "Task": "Bath Reno To 6m2 New Shower - Reconfiguration",
     "Further details": "\"This item is for a complete bathroom renovation, including bathroom reconfiguration requirements as part of disability modifications, where an existing bath is removed, a new shower area installed or shower with increased size in new location for a bathroom up to 6m2, including all sanitary ware, and renewing all fittings, fixtures and material components for the installation of the following as per SAHA NATSPEC and SAHA generic design guidelines for house renovations."
   },
-  {
-    "Prefix": "Inclusive of wall basin (5l), towel rails, shower curtain rails and support, bathroom mirror cabinet (750mm), soap holder, all concealed pipework, all tapware and breeching pieces, shower rose, double power point, light switch, wall or ceiling exhaust fan, new shower floor drains, complete concrete floor replacement to required falls, floor grates and puddle flanges, waterproofing, wall and floor tiles, grout and silicone sealants, door stop, minor wall patching, internal painting of walls, ceiling, door, door and window frames and architraves, the reinstatement of disability modifications, and final clean."
-  },
-  {
-    "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
-  },
-  {
-    "Prefix": "Replace all concealed hot and cold pipework and electrical cables in locations required for new layout. Provide all underfloor plumbing modifications, include white ant treatment and new earth mesh. Provide stepless shower entry for shower area and size. Supply and install puddle flanges. (where there is no centre floor trap - grade entire floor area to shower drain)."
-  },
-  {
-    "Prefix": "Make good any hard plaster or section of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of existing disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
-  },
-  {
-    "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
-  },
-  {
-    "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
-  },
-  {
-    "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
-  },
-  {
-    "Prefix": "Renewal and/or relocation of windows use cy codes."
-  },
-  {
-    "Prefix": "Mould treatment use ip codes."
-  },
-  {
-    "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
-  },
+  // {
+  //   "Prefix": "Inclusive of wall basin (5l), towel rails, shower curtain rails and support, bathroom mirror cabinet (750mm), soap holder, all concealed pipework, all tapware and breeching pieces, shower rose, double power point, light switch, wall or ceiling exhaust fan, new shower floor drains, complete concrete floor replacement to required falls, floor grates and puddle flanges, waterproofing, wall and floor tiles, grout and silicone sealants, door stop, minor wall patching, internal painting of walls, ceiling, door, door and window frames and architraves, the reinstatement of disability modifications, and final clean."
+  // },
+  // {
+  //   "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, bath and bath surround/frame-work, where present."
+  // },
+  // {
+  //   "Prefix": "Replace all concealed hot and cold pipework and electrical cables in locations required for new layout. Provide all underfloor plumbing modifications, include white ant treatment and new earth mesh. Provide stepless shower entry for shower area and size. Supply and install puddle flanges. (where there is no centre floor trap - grade entire floor area to shower drain)."
+  // },
+  // {
+  //   "Prefix": "Make good any hard plaster or section of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of existing disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
+  // },
+  // {
+  //   "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
+  // },
+  // {
+  //   "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
+  // },
+  // {
+  //   "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
+  // },
+  // {
+  //   "Prefix": "Renewal and/or relocation of windows use cy codes."
+  // },
+  // {
+  //   "Prefix": "Mould treatment use ip codes."
+  // },
+  // {
+  //   "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
+  // },
   {
     "Prefix": "Venting to atmosphere of exhaust fan - check roof design and ceiling space first. Fit flue only where required as per SAHA NATSPEC.\"",
     "Category": "ea",
@@ -21119,39 +21119,39 @@ var _scheduleDataList = [
     "Task": "Bathroom Utility Combination Reno To 9m2 New Sh Alc",
     "Further details": "\"This item is for a complete combination bathroom/utility renovation for removing of an existing shower and installing a new shower in same location and renewing utility sanitary ware for a bathroom/utility room up to 9m2, including all sanitary ware, fittings, fixtures and material components for installation of the following as per SAHA NATSPEC. Inclusive of wall basin (5l), toilet suite, laundry trough with metal cabinet, towel rails, shower curtain rails and support, bathroom mirror cabinet (750mm), soap holder, all concealed pipework, all tapware and breeching pieces, shower rose, double power points, light switch, wall or ceiling exhaust fan, floor levelling, floor grates and puddle flanges, waterproofing, wall and floor tiles, grout and silicone sealants, door stop, minor wall patching, internal painting of walls, ceiling, door, door and window frames and architraves, the reinstatement of disability modifications, and final clean."
   },
-  {
-    "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, where present."
-  },
-  {
-    "Prefix": "Inclusive of any floor patching and scabbling to achieve required falls to provide stepless shower entry for shower area. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
-  },
-  {
-    "Prefix": "Make good any hard plaster or section of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of existing disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
-  },
-  {
-    "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
-  },
-  {
-    "Prefix": "Complete concrete floor removal and replacement use cn codes"
-  },
-  {
-    "Prefix": "Relocating floor drains use PD codes"
-  },
-  {
-    "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
-  },
-  {
-    "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
-  },
-  {
-    "Prefix": "Renewal and/or relocation of windows use cy codes."
-  },
-  {
-    "Prefix": "Mould treatment use ip codes."
-  },
-  {
-    "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
-  },
+  // {
+  //   "Prefix": "Remove all electrical fittings, carpentry fixtures, plumbing and sanitary ware, existing disability modification fixtures and fittings, wall and floor tiles, any supporting dwarf wall structure/frame-work, nib/shower screens, basin vanity units, where present."
+  // },
+  // {
+  //   "Prefix": "Inclusive of any floor patching and scabbling to achieve required falls to provide stepless shower entry for shower area. Supply and install puddle flanges. (where there is no centre floor trap - scabble / grade entire floor area to shower drain)."
+  // },
+  // {
+  //   "Prefix": "Make good any hard plaster or section of wall linings. Note: where rebuilding a wall or renewing wall linings, supply and install timber trims and noggings as provision for fixtures and future grab rails as per SAHA NATSPEC. Reinstatement of existing disability modifications fittings and fixtures. Renew wall or ceiling mounted exhaust fan wired to light switch marked as fan. Install new ceiling mounted light fitting (batten holder). Final clean."
+  // },
+  // {
+  //   "Prefix": "Additional work excluded from this item code claim may include the following on approval by the principal’s representative: "
+  // },
+  // {
+  //   "Prefix": "Complete concrete floor removal and replacement use cn codes"
+  // },
+  // {
+  //   "Prefix": "Relocating floor drains use PD codes"
+  // },
+  // {
+  //   "Prefix": "Replacement of damaged timbers behind sheet wall linings or damaged wall linings / doors use cy codes"
+  // },
+  // {
+  //   "Prefix": "Damaged areas of cornices and ceilings to be replaced use cy codes"
+  // },
+  // {
+  //   "Prefix": "Renewal and/or relocation of windows use cy codes."
+  // },
+  // {
+  //   "Prefix": "Mould treatment use ip codes."
+  // },
+  // {
+  //   "Prefix": "Shower screens - only to be installed in approved circumstances by the principal."
+  // },
   {
     "Prefix": "Venting to atmosphere of exhaust fan - check roof design and ceiling space first. Fit flue only where required as per SAHA NATSPEC.\"",
     "Category": "ea",

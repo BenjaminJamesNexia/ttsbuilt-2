@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:ttsbuiltmobile/data/repositories/simpro_repository.dart';
 import 'package:ttsbuiltmobile/interface/screens/work_notes_screen.dart';
 import 'package:ttsbuiltmobile/logic/blocs/simpro_connection_bloc.dart';
 import 'package:ttsbuiltmobile/logic/states/simpro_connection_state.dart';
@@ -9,6 +11,7 @@ import '../../logic/blocs/job_listing_bloc.dart';
 import '../../logic/blocs/processing_progress_bloc.dart';
 import '../../logic/blocs/schedule_filter_bloc.dart';
 import '../../logic/states/connection_available.dart';
+import '../../logic/states/job_listing_event.dart';
 import '../../logic/states/job_listing_state.dart';
 import '../components/global.dart';
 import '../router/app_router.dart';
@@ -57,7 +60,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
       return BlocBuilder<JobListingBloc, JobListingState>(
           builder: (context, jobListingState) {
         Map<String, dynamic> thisJob = jobListingState.jobs[jobId.toString()];
-        List<Widget> scheduleItems = [];
+        List<Widget> linkedScheduleItems = [];
         if (thisJob.containsKey("schedule-item-listing")) {
           //For each item, materials and photos can be listed
           //Notes will have a subject starting with an item code,
@@ -68,15 +71,15 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
           int itemCount = 0;
           for (var item in thisJob["schedule-item-listing"]) {
             // for(int i = 0; i < 33; i++) {
-            if (itemCount > 0) scheduleItems.add(SizedBox(height: 8));
-            scheduleItems.add(GestureDetector(
+            if (itemCount > 0) linkedScheduleItems.add(SizedBox(height: 8));
+            linkedScheduleItems.add(GestureDetector(
               child: _getItemListing(item, size),
-              onTap: () => _selectScheduleItem(item, scheduleRepo, context),
+              onTap: () => _selectLinkedScheduleItem(item, scheduleRepo, context),
             ));
             itemCount++;
             // }
           }
-          if (scheduleItems.isEmpty) {
+          if (linkedScheduleItems.isEmpty) {
             if (thisJob.containsKey("schedule-item-listing-2") &&
                 thisJob["schedule-item-listing-2"].isNotEmpty) {
               String firstItem = thisJob["schedule-item-listing-2"][0];
@@ -89,7 +92,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                 if (scheduleItem != null) {
                   var item = {};
                   item["schedule-reference-item"] = scheduleItem;
-                  scheduleItems.add(_getItemListing(item, size));
+                  linkedScheduleItems.add(_getItemListing(item, size));
                 }
               }
             }
@@ -109,39 +112,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      Padding(
-                          padding: new EdgeInsets.all(6.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: c2,
-                                  border: Border.all(
-                                    color: c2,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: Padding(
-                                  padding: new EdgeInsets.all(4.0),
-                                  child: Row(children: <Widget>[
-                                    Image.asset(
-                                        'assets/images/territory-trade-services-icon.png'),
-                                    Spacer(),
-                                    Padding(
-                                        padding: new EdgeInsets.all(7.0),
-                                        child: Container(
-                                            constraints: BoxConstraints(
-                                              maxWidth: size.width - 130,
-                                            ),
-                                            child: SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: Text(
-                                                    thisJob["details"]["Site"]
-                                                        ["Name"],
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 30))))),
-                                    Spacer(),
-                                  ])))),
+                      getJobHeader(size, thisJob),
                       SizedBox(height: 8),
                       BlocBuilder<ScheduleFilterBloc, ScheduleFilterState>(
                           builder: (context, filterState) {
@@ -162,19 +133,22 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                                 filtersApplied.add(
                                   Row(
                                     children: [
-                                      Expanded(
-                                          flex: 1,
+                                      Container(
+                                          width: 100,
                                           child: Text(
-                                          filter, style: defaultTextStyle)),
+                                          filter, style: defaultTextStyle.copyWith(fontSize: 18, fontWeight: FontWeight.bold))),
                                       Expanded(
                                           flex: 2,
                                           child: Text(filters[filter]!,
                                           style: defaultTextStyle)),
-                                      Align(child: Icon(
+                                      Align(child: GestureDetector(
+                                        child:Icon(
                                             Icons.remove_circle_outline,
                                             color: Colors.white,
-                                            size: 16
-                                          )
+                                            size: 16,
+                                          ),
+                                          onTap: () => _removeFilter(filter, filters[filter]!, context, scheduleRepo),
+                                      )
                                       )
                                     ]
                                 ));
@@ -190,7 +164,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                                       Container(
                                           color: Colors.grey[900],
                                           height: 20,
-                                          width: size.width - 103,
+                                          width: size.width - 110,
                                           child: TextField(
                                         controller: textController,
                                         style: defaultTextStyle,
@@ -202,16 +176,25 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                                     ]
                                 )
                                   );
-                            List<Widget> widgetsToList = [];
+                        List<Widget> widgetsToList = [];
                         List<Map<String, String>> itemsToDisplay =
                             filterState.filterResults;
                         itemsToDisplay.sort((a, b) {
-                          int compareCategory =
-                              a["Category"]!.compareTo(b["Category"]!);
-                          if (compareCategory != 0) return compareCategory;
-                          int compareSubsection =
-                              a["Subsection"]!.compareTo(b["Subsection"]!);
-                          if (compareSubsection != 0) return compareSubsection;
+                          if(a.containsKey("Category") && b.containsKey("Category")) {
+                            int compareCategory =
+                            a["Category"]!.compareTo(b["Category"]!);
+                            if (compareCategory != 0) return compareCategory;
+                          }else{
+                            int sdf = 0;
+                          }
+                          if(a.containsKey("Subsection") && b.containsKey("Subsection")) {
+                            int compareSubsection =
+                            a["Subsection"]!.compareTo(b["Subsection"]!);
+                            if (compareSubsection != 0)
+                              return compareSubsection;
+                          }else{
+                            int sdf = 0;
+                          }
                           return a["Code"]!.compareTo(b["Code"]!);
                         });
                         bool firstAdded = true;
@@ -219,12 +202,12 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                           if(firstAdded){
                             firstAdded = false;
                           }else{
-                            widgetsToList.add(SizedBox(height: 4));
+                            widgetsToList.add(SizedBox(height: 10));
                           }
                           Widget widgetToAdd = _getItemListing(scheduleItem, size);
                           widgetsToList.add(GestureDetector(
                             child: widgetToAdd,
-                            onTap: () => _selectScheduleItem(scheduleItem, scheduleRepo, context),
+                            onTap: () => _selectScheduleItem(scheduleItem, thisJob, context),
                           ));
                         }
                         return Column(
@@ -235,7 +218,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                                       ),
                                       padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
                                       width: size.width - 30,
-                                      height: 90,
+                                      height: 100,
                                       child: SingleChildScrollView(
                                           child: Column(children: filtersApplied))),
                                   SizedBox(height: 7),
@@ -260,7 +243,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                             )),
                         child: Container(
                             height: 26,
-                            color: c3,
+                            color: c1_darker,
                             child: Center(
                                 child: Text("Linked Spotless Schedule Items",
                                     style: TextStyle(
@@ -268,13 +251,17 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                       ),
                       Container(
                           decoration: BoxDecoration(
-                            border: Border.all(width: 2, color: c2),
+                            border: Border(
+                              bottom: BorderSide(width: 2.0, color: c2),
+                              left: BorderSide(width: 2.0, color: c2),
+                              right: BorderSide(width: 2.0, color: c2),
+                            ),
                           ),
                           padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
                           width: size.width - 30,
-                          height: -10 + size.height / 4,
+                          height: -40 + size.height / 4,
                           child: SingleChildScrollView(
-                              child: Column(children: scheduleItems))),
+                              child: Column(children: linkedScheduleItems))),
                     ]))));
       });
     }));
@@ -300,7 +287,26 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
     bloc.add(event);
   }
 
-  void _selectScheduleItem(var item, ScheduleRepository scheduleRepo, BuildContext context) {
+  void _selectScheduleItem(var item, Map<String, dynamic> thisJob, BuildContext context) async {
+    //Get the current job, add tihs item to the schedule items list and send to the job listing bloc as an event
+    if(item.containsKey("schedule-reference-item")) item = item["schedule-reference-item"];
+    SimproRepository simproRepo = RepositoryProvider.of<SimproRepository>(context);
+    int id = await  simproRepo.addAWorkNoteScheduleItem(jobId, item);
+    var scheduleItem = {};
+    scheduleItem["work-note-id"] = id;
+    scheduleItem["schedule-reference-item"] = item;
+    thisJob["schedule-item-listing"].add(scheduleItem);
+
+    Map<String, dynamic> jobUpdateSkeleton = {};
+    jobUpdateSkeleton[jobId.toString()] = {};
+    jobUpdateSkeleton[jobId.toString()]["schedule-item-listing"] = thisJob["schedule-item-listing"];
+    JobListingState updateState = JobListingState(jobUpdateSkeleton);
+    UpdateListedJobs updateEvent = UpdateListedJobs(updateState);
+    JobListingBloc listingBloc = BlocProvider.of<JobListingBloc>(context);
+    listingBloc.add(updateEvent);
+  }
+
+  void _selectLinkedScheduleItem(var item, ScheduleRepository scheduleRepo, BuildContext context) {
     if(item.containsKey("schedule-reference-item")){
       String category = item["schedule-reference-item"]["Category"];
       String subsection = item["schedule-reference-item"]["Subsection"];
@@ -313,6 +319,34 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
       ScheduleFilterBloc bloc = BlocProvider.of<ScheduleFilterBloc>(context);
       bloc.add(event);
     }
+  }  
+  
+  
+  void _removeFilter(String filterName, String filterValue, BuildContext context, ScheduleRepository scheduleRepo){
+    ScheduleFilterBloc bloc = BlocProvider.of<ScheduleFilterBloc>(context);
+    ScheduleFilterState filterState = bloc.state;
+    Map<String, String> filters = filterState.filtersApplied;
+    List<Map<String, String>> results = filterState.filterResults;
+    bool filterRemoved = false;
+    for(String filter in filters.keys){
+      if(filter == filterName && filters[filter] == filterValue){
+        filters.remove(filter);
+        filterRemoved = true;
+        break;
+      }
+    }
+    if(filterRemoved){
+      String? category = null;
+      String? subsection = null;
+      String? task = null;
+      if(filters.containsKey("Category")) category = filters["Category"];
+      if(filters.containsKey("Subsection")) subsection = filters["Subsection"];
+      if(filters.containsKey("Task")) task = filters["Task"];
+      List<Map<String, String>> filterResults = applyFilter(task, category, subsection, scheduleRepo);
+      ScheduleFilterState state = ScheduleFilterState(filterResults, filters);
+      ScheduleFilterEvent event = ScheduleFilterEvent(state);
+      bloc.add(event);
+    }
   }
 
   Widget _getItemListing(item, Size size) {
@@ -321,14 +355,17 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
         child: Column(children: [
       Container(
           width: size.width - 2 * borderWidth,
-          height: 20,
+          height: 30,
+          padding: EdgeInsets.fromLTRB(3, 0, 1, 0),
           color: c3,
-          child: Center(
+          child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child:Center(
               child: Text(
                   item["Code"] +
                       ": " +
                       item["Task"],
-                  style: TextStyle(color: Colors.white)))),
+                  style: defaultTextStyle)))),
     ]));
   }
 

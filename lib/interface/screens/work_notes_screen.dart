@@ -200,11 +200,7 @@ List<TextNode> getNodeText(List<TextNode> nodes, htmlDom.Node node){
       if(textToDisplay.trim().length > 0) {
         TextStyle thisStyle;
         if (getElementLocalName(node as htmlDom.Element) == "strong") {
-          thisStyle = TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18
-          );
+          thisStyle = defaultTextStyle.copyWith(fontWeight: FontWeight.bold);
         } else {
           thisStyle = defaultTextStyle;
         }
@@ -220,8 +216,3 @@ List<TextNode> getNodeText(List<TextNode> nodes, htmlDom.Node node){
 String getElementLocalName(htmlDom.Element element){
   return element.localName!;
 }
-
-TextStyle defaultTextStyle = TextStyle(
-  color: Colors.white,
-  fontSize: 18
-);

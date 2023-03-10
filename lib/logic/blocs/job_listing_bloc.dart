@@ -40,4 +40,5 @@ class JobListingBloc extends Bloc<JobListingEvent, JobListingState>{
     }
     emit(state);
   }
+
 }
