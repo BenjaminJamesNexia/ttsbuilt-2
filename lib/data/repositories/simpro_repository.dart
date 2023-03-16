@@ -232,7 +232,15 @@ class SimproRepository {
                 var item = scheduleRepo.getItem(firstWord);
                 scheduleItem["schedule-reference-item"] = item;
                 if(jobNote["Note"] != null && jobNote["Note"].length > 0){
-                  scheduleItem["Note"] = jobNote["Note"];
+                  var note = jsonDecode(jobNote["Note"]);
+                  scheduleItem["note"] = note;
+                  if(note.containsKey("iteration")){
+                    scheduleItem["iteration"] = note["iteration"];
+                  }else{
+                    scheduleItem["iteration"] = 1;
+                  }
+                }else{
+                  scheduleItem["iteration"] = 1;
                 }
                 job["schedule-item-listing"].add(scheduleItem);
               }
@@ -416,7 +424,7 @@ class SimproRepository {
 
   ///The item should be a Map<String, String> - it seems to get a _Map<String, String> in the screen and not sure how to handle that so used var here
   ///as it seems to work for both
-  Future<int> addAWorkNoteScheduleItem(int id, var item) async{
+  Future<int> addAWorkNoteScheduleItem(int id, var item, int iteration) async{
     //for testing just use the test id
     id = 3000837;
     Map<String, String> headers = {};
@@ -424,6 +432,7 @@ class SimproRepository {
     headers["Content-Type"] = "application/json";
     Map<String, String> body = {};
     body["Subject"] = item["Code"]! + " " + item["Task"]!;
+    if(iteration > 1) body["Note"] = "{\"iteration\":" + iteration.toString().padLeft(3,"0") + "}";
     String bodyString = jsonEncode(body);
     try {
       String link =
@@ -438,8 +447,8 @@ class SimproRepository {
         debugPrint(postResult.toString());
       }else{
         debugPrint(postResult.toString());
-        Map<String, dynamic> responseJSON = jsonDecode(postResult.toString());
-        return responseJSON["ID"];
+        var responseBody = json.decode(utf8.decode(postResult.bodyBytes));
+        return responseBody["ID"];
       }
 
     } catch (ex) {

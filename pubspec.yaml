@@ -39,6 +39,7 @@ dependencies:
   flutter_html: ^2.2.1
   html: ^0.15.1
   intl: ^0.18.0
+  camera: ^0.10.3+2
 
 flutter_icons:
   ios: true

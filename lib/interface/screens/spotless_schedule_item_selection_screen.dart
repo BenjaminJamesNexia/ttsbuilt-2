@@ -112,7 +112,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      getJobHeader(size, thisJob),
+                      getJobHeader(size, thisJob["details"]["Site"]["Name"]),
                       SizedBox(height: 8),
                       BlocBuilder<ScheduleFilterBloc, ScheduleFilterState>(
                           builder: (context, filterState) {
@@ -288,12 +288,22 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
   }
 
   void _selectScheduleItem(var item, Map<String, dynamic> thisJob, BuildContext context) async {
-    //Get the current job, add tihs item to the schedule items list and send to the job listing bloc as an event
+    //Get the current job, add this item to the schedule items list and send to the job listing bloc as an event
     if(item.containsKey("schedule-reference-item")) item = item["schedule-reference-item"];
     SimproRepository simproRepo = RepositoryProvider.of<SimproRepository>(context);
-    int id = await  simproRepo.addAWorkNoteScheduleItem(jobId, item);
+
+    int iteration = 1;
+    for(var thisItem in thisJob["schedule-item-listing"]){
+      if(thisItem["schedule-reference-item"]["Code"] == item["Code"]){
+        iteration++;
+      }
+    }
+
+    int id = await  simproRepo.addAWorkNoteScheduleItem(jobId, item, iteration);
     var scheduleItem = {};
+
     scheduleItem["work-note-id"] = id;
+    scheduleItem["iteration"] = iteration;
     scheduleItem["schedule-reference-item"] = item;
     thisJob["schedule-item-listing"].add(scheduleItem);
 
@@ -307,7 +317,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
   }
 
   void _selectLinkedScheduleItem(var item, ScheduleRepository scheduleRepo, BuildContext context) {
-    if(item.containsKey("schedule-reference-item")){
+    if(item.      containsKey("schedule-reference-item")){
       String category = item["schedule-reference-item"]["Category"];
       String subsection = item["schedule-reference-item"]["Subsection"];
       List<Map<String, String>> filterResults = applyFilter(null, category, subsection, scheduleRepo);

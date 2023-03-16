@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../logic/states/user_state.dart';
 
-Color c1 = Color.fromRGBO(220, 126, 34, 1);
+Color c1 = Color.fromRGBO(220, 126, 34, 1.0);
+Color c1_slightly_darker = Color.fromRGBO(147, 88, 31, 1.0);
 Color c1_darker = Color.fromRGBO(176, 102, 28, 0);
 Color c2 = Color.fromRGBO(220, 163, 34, 1);
 Color c3 = Color.fromRGBO(38, 62, 149, 1);
@@ -19,7 +20,17 @@ class WorkNoteID{
   final int companyId;
   final int jobId;
   final int workNoteId;
-  WorkNoteID(this.companyId, this.jobId, this.workNoteId);
+  final int iteration;
+  WorkNoteID(this.companyId, this.jobId, this.workNoteId, this.iteration);
+}
+
+class WorkNoteAttachment{
+  final int companyId;
+  final int jobId;
+  final int workNoteId;
+  final int iteration;
+  final String imagePath;
+  WorkNoteAttachment(this.companyId, this.jobId, this.workNoteId, this.iteration, this.imagePath);
 }
 
 Widget _getHeader(Size size, String text){
@@ -58,8 +69,8 @@ Widget getUserHeader(Size size, UserState userState){
   return _getHeader(size, userState.name);
 }
 
-Widget getJobHeader(Size size, thisJob){
-  return _getHeader(size, thisJob["details"]["Site"]["Name"]);
+Widget getJobHeader(Size size, String jobName){
+  return _getHeader(size, jobName);
 }
 
 TextStyle defaultTextStyle = TextStyle(

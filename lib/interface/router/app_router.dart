@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ttsbuiltmobile/interface/screens/display_site_photo_screen.dart';
+import 'package:ttsbuiltmobile/interface/screens/item_attachment_screen.dart';
 import 'package:ttsbuiltmobile/interface/screens/spotless_schedule_item_selection_screen.dart';
 
 import '../components/global.dart';
@@ -14,7 +16,8 @@ enum Pages{
   descriptionDetail,
   workNotes,
   itemMaterials,
-  itemPhotos
+  itemAttachment,
+  sitePhoto
 }
 
 class AppRouter {
@@ -24,6 +27,8 @@ class AppRouter {
   static const String workNotesPath = '/job/workNotes';
   static const String itemListingPath = '/job/item';
   static const String spotlessScheduleItemSelectionScreen = '/job/item/scheduleItemSelection';
+  static const String itemAttachmentPath = '/job/item/attachment';
+  static const String displaySitePhoto = '/job/item/attachment/DisplaySitePhoto';
   // static const String itemMaterialsPath = '/job/item/materials';
   // static const String itemPhotosPath = '/job/item/photos';
 
@@ -86,6 +91,26 @@ class AppRouter {
             );
           },
         );
+      case AppRouter.itemAttachmentPath:
+        return MaterialPageRoute(
+          builder:  (context) {
+            WorkNoteID args = settings.arguments as WorkNoteID;
+            return ItemAttachmentScreen(
+                args
+            );
+          },
+        );
+
+      case AppRouter.displaySitePhoto:
+        return MaterialPageRoute(
+          builder:  (context) {
+            WorkNoteAttachment args = settings.arguments as WorkNoteAttachment;
+            return DisplaySitePhotoScreen(
+                args,
+            );
+          },
+        );
+
       // case AppRouter.itemMaterialsPath:
       //   return MaterialPageRoute(
       //       builder: (_) => ItemMaterialsScreen()

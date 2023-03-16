@@ -68,20 +68,35 @@ class JobDetailScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold))
                 )
             ));
+        List<String> scheduledItemCodes = [];
         for (String item in thisJob["schedule-item-listing-2"]) {
           int firstSpacePos = item.indexOf(" ");
           if (firstSpacePos == -1) continue;
           String firstWord = item.substring(0, firstSpacePos);
           if(firstWord.length > 5) firstWord = firstWord.substring(0,5);
           if (scheduleRepo.isAnItemCode(firstWord) == false) continue;
+          scheduledItemCodes.add(firstWord);
+        }
+
+        for (var item in thisJob["schedule-item-listing"]) {
+          if(item["work-note-id"] == -1) continue;
+          var scheduleReferenceItem = item["schedule-reference-item"];
+          String itemCode = scheduleReferenceItem["Code"];
+          if (scheduleRepo.isAnItemCode(itemCode) == false) continue;
+          scheduledItemCodes.add(itemCode);
+        }
+
+        for(String itemCode in scheduledItemCodes) {
+          var scheduleItem = scheduleRepo.getItem(itemCode);
+          String itemText = scheduleItem!["Code"]! + " " + scheduleItem!["Task"]!;
           scheduleItemsList.add(
               Container(
-                width: size.width - 30,
-                child: new Padding(
+                  width: size.width - 30,
+                  child: new Padding(
                       padding: new EdgeInsets.fromLTRB(10, 3, 3, 0),
-                      child: Text(item, style: const TextStyle(
-                        color: Colors.white, fontSize: 18))
-                    )
+                      child: Text(itemText, style: const TextStyle(
+                          color: Colors.white, fontSize: 18))
+                  )
               )
           );
         }
@@ -111,7 +126,7 @@ class JobDetailScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      getJobHeader(size, thisJob),
+                      getJobHeader(size, thisJob["details"]["Site"]["Name"]),
                       Container(
                           decoration: BoxDecoration(
                             color: c3,

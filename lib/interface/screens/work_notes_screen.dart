@@ -119,9 +119,8 @@ class WorkNotesScreen extends StatelessWidget {
                             width: size.width - 2 * borderWidth,
                             height: size.height - 2 * borderWidth,
                             child: Column(children: <Widget>[
-                              getJobHeader(size, thisJob),
+                              getJobHeader(size, thisJob["details"]["Site"]["Name"]),
                               Expanded(
-
                                   child: SingleChildScrollView(
                                     child: Padding(
                                         padding: EdgeInsets.all(7.0),

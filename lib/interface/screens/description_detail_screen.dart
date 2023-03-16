@@ -59,7 +59,7 @@ class DescriptionDetailScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      getJobHeader(size, thisJob),
+                      getJobHeader(size, thisJob["details"]["Site"]["Name"]),
                       Container(
                           width: size.width - 30,
                           height: size.height - 152,

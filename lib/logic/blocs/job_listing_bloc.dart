@@ -25,6 +25,7 @@ class JobListingBloc extends Bloc<JobListingEvent, JobListingState>{
   void _updateJobListing(UpdateListedJobs event, Emitter<JobListingState> emit){
     Map<String, dynamic> currentState = this.state.jobs;
     Map<String, dynamic> stateUpdates = event.getState().jobs;
+    bool updated = false;
     for(String jobId in stateUpdates.keys){
       var thisJob = stateUpdates[jobId];
       for(String fieldToUpdate in thisJob.keys){
@@ -32,13 +33,16 @@ class JobListingBloc extends Bloc<JobListingEvent, JobListingState>{
         if(fieldToUpdate == "details"){
           for(String detailField in thisJob["details"].keys){
             currentState[jobId]["details"][detailField] = stateUpdates[jobId]["details"][detailField];
+            updated = true;
           }
         }else{
           currentState[jobId][fieldToUpdate] = stateUpdates[jobId][fieldToUpdate];
+          updated = true;
         }
       }
     }
-    emit(state);
+    JobListingState newState = JobListingState(currentState);
+    if(updated) emit(newState);
   }
 
 }

@@ -4,7 +4,6 @@ import 'package:ttsbuiltmobile/logic/states/simpro_connection_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../logic/blocs/job_listing_bloc.dart';
-import '../../logic/blocs/processing_progress_bloc.dart';
 import '../../logic/states/connection_available.dart';
 import '../../logic/states/job_listing_state.dart';
 import '../components/global.dart';
@@ -90,7 +89,7 @@ class ItemListingScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      getJobHeader(size, thisJob),
+                      getJobHeader(size, thisJob["details"]["Site"]["Name"]),
                       SizedBox(height: 8),
                       Container(
                           decoration: BoxDecoration(
@@ -108,16 +107,16 @@ class ItemListingScreen extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(9, 12, 9, 12),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2, color: c2),
+                      border: Border.all(width: 6, color: c2),
                     ),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushNamed(
                           AppRouter.spotlessScheduleItemSelectionScreen,
-                          arguments: WorkNoteID(0, thisJob["ID"], rootSpotlessScheduleId));
+                          arguments: WorkNoteID(0, thisJob["ID"], rootSpotlessScheduleId, 1));
                     },
                     child:Container(
-                      height: 26,
+                      height: 30,
                       color: c3,
                       child: Center(
                           child: Text(
@@ -129,23 +128,24 @@ class ItemListingScreen extends StatelessWidget {
     });
   }
 
-  Widget getItemListing(item, Size size, BuildContext context, int jobId){
+  Widget getItemListing(var item, Size size, BuildContext context, int jobId){
+    if(item.containsKey("iteration") == false) item["iteration"] = 1;
     return Container(
         decoration: BoxDecoration(
-          border: Border.all(width: 2, color: c2),
+          border: Border.all(width: 2, color: c1_slightly_darker),
         ),
 
         child: Column(children: [
           Container(
               width: size.width - 2 * borderWidth,
-              height: 20,
+              height: 23,
               color: c3,
               child: Center(
                   child: Text(
                       item["schedule-reference-item"]["Code"] +
                           ": " +
                           item["schedule-reference-item"]["Task"],
-                      style: TextStyle(color: Colors.white)))),
+                      style: defaultTextStyle))),
           Row(
               children:const [
                 Expanded(child:Center(child:Text("Attachments",
@@ -186,16 +186,22 @@ class ItemListingScreen extends StatelessWidget {
                                   style: TextStyle(color: Colors.white)),
                             ])))
               ]),
-          Row(
+          Container(
+              height: 23,
+              child: Row(
               children:[
                 Expanded(child:GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushNamed(
-                          AppRouter.spotlessScheduleItemSelectionScreen,
-                          arguments: WorkNoteID(0, jobId, item["work-note-id"]));
+                          AppRouter.itemAttachmentPath,
+                          arguments: WorkNoteID(0, jobId, item["work-note-id"], item["iteration"]));
                     },
                     child: Container(
-                    color: c4,
+                        margin: EdgeInsets.fromLTRB(2, 1, 1, 2),
+                    decoration: BoxDecoration(
+                      color: c4,
+                      border: Border.all(width: 2, color: c2),
+                    ),
                     child: Center(
                         child: Text("Click to add attachment",
                             style: TextStyle(color: Colors.white)))))),
@@ -204,16 +210,20 @@ class ItemListingScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pushNamed(
                           AppRouter.spotlessScheduleItemSelectionScreen,
-                          arguments: WorkNoteID(0, jobId, item["work-note-id"]));
+                          arguments: WorkNoteID(0, jobId, item["work-note-id"], item["iteration"]));
                     },
                     child:Container(
-                    color: c4,
+                        margin: EdgeInsets.fromLTRB(1, 1, 2, 2),
+                        decoration: BoxDecoration(
+                          color: c4,
+                          border: Border.all(width: 2, color: c2),
+                        ),
                     width: -8 + (size.width - 2) / 2,
                     child: Center(
                         child: Text("Click to add materials",
                             style: TextStyle(color: Colors.white))))))
               ]
-          )
+          ))
         ]));
   }
 
