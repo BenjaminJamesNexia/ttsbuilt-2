@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ttsbuiltmobile/interface/screens/display_site_photo_screen.dart';
+import 'package:ttsbuiltmobile/interface/screens/allocate_site_photo_screen.dart';
 import 'package:ttsbuiltmobile/interface/screens/item_attachment_screen.dart';
 import 'package:ttsbuiltmobile/interface/screens/spotless_schedule_item_selection_screen.dart';
 
@@ -105,7 +105,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder:  (context) {
             WorkNoteAttachment args = settings.arguments as WorkNoteAttachment;
-            return DisplaySitePhotoScreen(
+            return AllocateSitePhotoScreen(
                 args,
             );
           },

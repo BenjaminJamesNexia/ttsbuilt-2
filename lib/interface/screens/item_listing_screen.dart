@@ -129,7 +129,7 @@ class ItemListingScreen extends StatelessWidget {
   }
 
   Widget getItemListing(var item, Size size, BuildContext context, int jobId){
-    if(item.containsKey("iteration") == false) item["iteration"] = 1;
+    if(item.containsKey("iteration") == false) item["iteration"] = "001";
     return Container(
         decoration: BoxDecoration(
           border: Border.all(width: 2, color: c1_slightly_darker),
@@ -194,7 +194,7 @@ class ItemListingScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pushNamed(
                           AppRouter.itemAttachmentPath,
-                          arguments: WorkNoteID(0, jobId, item["work-note-id"], item["iteration"]));
+                          arguments: WorkNoteID(0, jobId, item["work-note-id"], int.parse(item["iteration"])));
                     },
                     child: Container(
                         margin: EdgeInsets.fromLTRB(2, 1, 1, 2),

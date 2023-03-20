@@ -303,7 +303,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
     var scheduleItem = {};
 
     scheduleItem["work-note-id"] = id;
-    scheduleItem["iteration"] = iteration;
+    scheduleItem["iteration"] = iteration.toString().padLeft(3, "0");
     scheduleItem["schedule-reference-item"] = item;
     thisJob["schedule-item-listing"].add(scheduleItem);
 

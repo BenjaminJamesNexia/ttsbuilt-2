@@ -77,3 +77,8 @@ TextStyle defaultTextStyle = TextStyle(
     color: Colors.white,
     fontSize: 18
 );
+
+enum AttachmentPhase{
+  before,
+  after
+}
