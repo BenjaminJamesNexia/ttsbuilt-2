@@ -112,7 +112,7 @@ class SpotlessScheduleItemSelectionScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      getJobHeader(size, thisJob["details"]["Site"]["Name"]),
+                      getJobDetailHeader(size, thisJob["details"]["Site"]["Name"], context, JobIDs(companyId, jobId)),
                       SizedBox(height: 8),
                       BlocBuilder<ScheduleFilterBloc, ScheduleFilterState>(
                           builder: (context, filterState) {

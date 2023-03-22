@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:html/dom.dart';
@@ -65,7 +66,7 @@ class SimproRepository {
 
   createUserEvent() async {
     OAuth2Helper oauth2Helper = OAuth2Helper(client,
-        grantType: OAuth2Helper.AUTHORIZATION_CODE,
+        grantType: OAuth2Helper.authorizationCode,
         clientId: '216db2b119c178035694d36ee1b90b',
         clientSecret: 'ac0f1b5725');
 
@@ -139,7 +140,7 @@ class SimproRepository {
     }
 
     OAuth2Helper oauth2Helper = OAuth2Helper(client,
-        grantType: OAuth2Helper.AUTHORIZATION_CODE,
+        grantType: OAuth2Helper.authorizationCode,
         clientId: '216db2b119c178035694d36ee1b90b',
         clientSecret: 'ac0f1b5725');
 
@@ -165,7 +166,7 @@ class SimproRepository {
     http.Response resp = await oauth2Helper.get(
         'https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/?page=' +
             pageNum.toString() +
-            '&Status.ID=!in(70,12,67,13,142,11)',
+            '&Status.ID=!in(70,12,67,13,142,11)&ID=3000837&pageSize=250',
         headers: headers);
     List<dynamic> jobsListing = jsonDecode(resp.body);
     Map<String, String> httpHeaders = resp.headers;
@@ -189,10 +190,11 @@ class SimproRepository {
 
     int jobDetailStartTime = 0;
 
-    int jobsProcessed = 0;
-
+    int userJobsProcessed = 0;
+    int totalJobsProcessed = 0;
     while (jobsListing.isNotEmpty) {
       for (Map<String, dynamic> job in jobsListing) {
+        totalJobsProcessed++;
         int cycleTime = DateTime.now().millisecondsSinceEpoch - startTime;
         if (cycleTime < 100) {
           int timeToPause = 100 - cycleTime;
@@ -240,7 +242,7 @@ class SimproRepository {
         link =
             "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
                 id.toString() +
-                "/notes/";
+                "/notes/?pageSize=250&columns=ID,Subject,Note,FollowUpDate,AssignTo,Reference";
 
         resp = await oauth2Helper.get(link, headers: headers);
 
@@ -261,14 +263,27 @@ class SimproRepository {
                 var item = scheduleRepo.getItem(firstWord);
                 scheduleItem["schedule-reference-item"] = item;
                 if (jobNote["Note"] != null && jobNote["Note"].length > 0) {
-                  var note = jsonDecode(jobNote["Note"]);
-                  scheduleItem["note"] = note;
-                  if (note.containsKey("iteration")) {
-                    scheduleItem["iteration"] = note["iteration"];
-                  } else {
-                    scheduleItem["iteration"] = "001";
+
+                  var document = parse(jobNote["Note"]);
+                  NodeList documentNodes = document.firstChild!.nodes[1].nodes;
+                  if (documentNodes[0].nodes.length > 1)
+                    documentNodes = documentNodes[0].nodes;
+                  List<String> scheduleItemListing = [];
+                  Map<String, dynamic> thisNotes = {};
+                  for (var node in documentNodes) {
+                    String? thisText = node.text;
+                    if(thisText == null) continue;
+                    var note = jsonDecode(thisText);
+                    for(String key in note.keys){
+                      thisNotes[key] = note[key];
+                    }
+                    if (note.containsKey("iteration")) {
+                      scheduleItem["iteration"] = note["iteration"];
+                    }
                   }
-                } else {
+                  if(thisNotes.isNotEmpty) scheduleItem["note"] = thisNotes;
+                }
+                if (scheduleItem.containsKey("iteration") == false) {
                   scheduleItem["iteration"] = "001";
                 }
                 job["schedule-item-listing"].add(scheduleItem);
@@ -350,23 +365,23 @@ class SimproRepository {
         }
 
         jobStates[job["ID"].toString()] = job;
-        jobsProcessed++;
+        userJobsProcessed++;
         processingState =
-            ProcessingProgressState(jobsProcessed, numberOfJobsToProcess);
+            ProcessingProgressState(userJobsProcessed, numberOfJobsToProcess);
         processingEvent = ProcessingProgressEvent(processingState);
         processingBloc.add(processingEvent);
       }
       pageNum++;
 
       OAuth2Helper oauth2Helper2 = OAuth2Helper(client,
-          grantType: OAuth2Helper.AUTHORIZATION_CODE,
+          grantType: OAuth2Helper.authorizationCode,
           clientId: '216db2b119c178035694d36ee1b90b',
           clientSecret: 'ac0f1b5725');
 
       resp = await oauth2Helper2.get(
           'https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/?page=' +
               pageNum.toString() +
-              '&Status.ID=!in(70,12,67,13,142,11)',
+              '&Status.ID=!in(70,12,67,13,142,11)&ID=3000837&pageSize=250',
           headers: headers);
       jobsListing = jsonDecode(resp.body);
     }
@@ -388,7 +403,7 @@ class SimproRepository {
     int startTime = DateTime.now().millisecondsSinceEpoch;
 
     OAuth2Helper oauth2Helper = OAuth2Helper(client,
-        grantType: OAuth2Helper.AUTHORIZATION_CODE,
+        grantType: OAuth2Helper.authorizationCode,
         clientId: '216db2b119c178035694d36ee1b90b',
         clientSecret: 'ac0f1b5725');
 
@@ -432,7 +447,7 @@ class SimproRepository {
           "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
               id.toString();
       OAuth2Helper oauth2Helper = OAuth2Helper(client,
-          grantType: OAuth2Helper.AUTHORIZATION_CODE,
+          grantType: OAuth2Helper.authorizationCode,
           clientId: '216db2b119c178035694d36ee1b90b',
           clientSecret: 'ac0f1b5725');
       AccessTokenResponse? accessTokenResponse = await oauth2Helper.getToken();
@@ -471,7 +486,7 @@ class SimproRepository {
     body["Subject"] = item["Code"]! + " " + item["Task"]!;
     if (iteration > 1)
       body["Note"] =
-          "{\"iteration\":" + iteration.toString().padLeft(3, "0") + "}";
+          "{\"iteration\":\"" + iteration.toString().padLeft(3, "0") + "\"}";
     String bodyString = jsonEncode(body);
     try {
       String link =
@@ -479,7 +494,7 @@ class SimproRepository {
               id.toString() +
               "/notes/";
       OAuth2Helper oauth2Helper = OAuth2Helper(client,
-          grantType: OAuth2Helper.AUTHORIZATION_CODE,
+          grantType: OAuth2Helper.authorizationCode,
           clientId: '216db2b119c178035694d36ee1b90b',
           clientSecret: 'ac0f1b5725');
       http.Response postResult =
@@ -498,35 +513,91 @@ class SimproRepository {
   }
 
   ///This saves the attachment in the job and updates the work note representing the schedule item the note is attachemd to
-  Future<int> saveJobItemAttachment(WorkNoteAttachment attachment, AttachmentPhase phase) async {
+  Future<int> saveJobItemAttachment(WorkNoteAttachment attachment, AttachmentPhase phase, BuildContext context) async {
+
+    //Get the job data
+    JobListingBloc jlb = BlocProvider.of<JobListingBloc>(context);
     //for testing just use the test id
-    id = 3000837;
+    int id = 3000837;
+    int companyId = 0;
+    int noteId = attachment.workNoteId;
+
+    Map<String, dynamic> thisAttachment = {};
+
+    //Get the notes from the bloc
+    Map<String,dynamic> thisJob = jlb.state.jobs[id.toString()];
+    var thisItem;
+    List<dynamic> scheduleItems = thisJob["schedule-item-listing"];
+    for(var item in scheduleItems){
+      if(item["work-note-id"] == noteId){
+        thisItem = item;
+        break;
+      }
+    }
+
+    thisAttachment["file-name"] = attachment.jobId.toString() + "_" + thisItem["schedule-reference-item"]["Code"] + "_" + attachment.iteration.toString() + "_" + phase.toShortString();
+    thisAttachment["phase"] = phase.toShortString();
+
+    //This is an attachment so we want to add this to the attachments
+    List<dynamic> attachments = [];
+    if(thisItem.containsKey("note") && thisItem["note"].containsKey("attachments")) attachments = thisItem["note"]["attachments"];
+
+    int fileNum = 1;
+    for(var attachment in attachments){
+      if(attachment["file-name"].startsWith(thisAttachment["file-name"])){
+        fileNum++;
+      }
+    }
+    thisAttachment["file-name"] = thisAttachment["file-name"] + "_" + fileNum.toString();
+    attachments.add(thisAttachment);
+
+    if(thisItem.containsKey("note")){
+      thisItem["note"]["attachments"] = attachments;
+    }else{
+      thisItem["note"] = {};
+      thisItem["note"]["attachments"] = attachments;
+    }
+
+    var uploadVal = {};
+    uploadVal["Note"] = jsonEncode(thisItem["note"]);
+    String noteString = jsonEncode(uploadVal);
+
+    String patchLink = "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
+        id.toString() +
+        "/notes/" + noteId.toString();
+
     Map<String, String> headers = {};
     headers["Accept"] = "*/*";
     headers["Content-Type"] = "application/json";
-    Map<String, String> body = {};
-    body["Subject"] = item["Code"]! + " " + item["Task"]!;
-    if (iteration > 1)
-      body["Note"] =
-          "{\"iteration\":" + iteration.toString().padLeft(3, "0") + "}";
-    String bodyString = jsonEncode(body);
+
     try {
-      String link =
-          "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
-              id.toString() +
-              "/notes/";
       OAuth2Helper oauth2Helper = OAuth2Helper(client,
-          grantType: OAuth2Helper.AUTHORIZATION_CODE,
+          grantType: OAuth2Helper.authorizationCode,
           clientId: '216db2b119c178035694d36ee1b90b',
           clientSecret: 'ac0f1b5725');
-      http.Response postResult =
-      await oauth2Helper.post(link, headers: headers, body: bodyString);
-      if (postResult.statusCode != 201) {
-        debugPrint(postResult.toString());
+      AccessTokenResponse? accessTokenResponse = await oauth2Helper.getToken();
+      String? accessToken = accessTokenResponse?.accessToken;
+      http.Response patchResult =
+      await oauth2Helper.patch(patchLink, headers: headers, body: noteString);
+      if (patchResult.statusCode != 204) {
+        debugPrint(patchResult.toString());
       } else {
-        debugPrint(postResult.toString());
-        var responseBody = json.decode(utf8.decode(postResult.bodyBytes));
-        return responseBody["ID"];
+        List<int> imageBytes = await File(attachment.imagePath).readAsBytes();
+        String base64Image = base64Encode(imageBytes);
+        ///upload the photo
+        var photoUpload = {};
+        photoUpload["Filename"] = thisAttachment["file-name"];
+        photoUpload["Public"] = false;
+        photoUpload["Email"] = false;
+        photoUpload["Base64Data"] = base64Image;
+        String postAttachmentLink = "https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/" +
+            id.toString() +
+            "/attachments/files/";
+        http.Response postResult = await oauth2Helper.post(postAttachmentLink, headers: headers, body: jsonEncode(photoUpload));
+        int statusCode = postResult.statusCode;
+        if(statusCode.toString().startsWith("2") == false){
+          //add the attachment to the thingy
+        }
       }
     } catch (ex) {
       debugPrint(ex.toString());

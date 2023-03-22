@@ -126,7 +126,7 @@ class JobDetailScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      getJobHeader(size, thisJob["details"]["Site"]["Name"]),
+                      getJobHeader(size, thisJob["details"]["Site"]["Name"], context),
                       Container(
                           decoration: BoxDecoration(
                             color: c3,

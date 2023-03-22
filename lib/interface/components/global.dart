@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../logic/states/user_state.dart';
+import '../router/app_router.dart';
 
 Color c1 = Color.fromRGBO(220, 126, 34, 1.0);
 Color c1_slightly_darker = Color.fromRGBO(147, 88, 31, 1.0);
@@ -33,7 +34,7 @@ class WorkNoteAttachment{
   WorkNoteAttachment(this.companyId, this.jobId, this.workNoteId, this.iteration, this.imagePath);
 }
 
-Widget _getHeader(Size size, String text){
+Widget _getHeader(Size size, String text, BuildContext context){
   return Padding(
       padding: new EdgeInsets.all(6.0),
       child: Container(
@@ -48,8 +49,13 @@ Widget _getHeader(Size size, String text){
           child: Padding(
               padding: new EdgeInsets.all(4.0),
               child: Row(children: <Widget>[
-                Image.asset(
-                    'assets/images/territory-trade-services-icon.png', height: 30),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                          AppRouter.jobListingPath);
+                    },
+                    child:Image.asset(
+                    'assets/images/territory-trade-services-icon.png', height: 30)),
                 Spacer(),
                 Container(
                     width: size.width - 120,
@@ -65,12 +71,51 @@ Widget _getHeader(Size size, String text){
               ]))));
 }
 
-Widget getUserHeader(Size size, UserState userState){
-  return _getHeader(size, userState.name);
+Widget getUserHeader(Size size, UserState userState, BuildContext context){
+  return _getHeader(size, userState.name, context);
 }
 
-Widget getJobHeader(Size size, String jobName){
-  return _getHeader(size, jobName);
+Widget getJobHeader(Size size, String jobName, BuildContext context){
+  return _getHeader(size, jobName, context);
+}
+
+
+Widget getJobDetailHeader(Size size, String text, BuildContext context, JobIDs jobIDs){
+  return Padding(
+      padding: new EdgeInsets.all(6.0),
+      child: Container(
+          decoration: BoxDecoration(
+              color: c4,
+              border: Border.all(
+                color: c3,
+              ),
+              borderRadius:
+              BorderRadius.all(Radius.circular(1))),
+          width: size.width - 31,
+          child: Padding(
+              padding: new EdgeInsets.all(4.0),
+              child: Row(children: <Widget>[
+                GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                          AppRouter.jobDetailPath,
+                      arguments: jobIDs);
+                    },
+                    child:Image.asset(
+                        'assets/images/territory-trade-services-icon.png', height: 30)),
+                Spacer(),
+                Container(
+                    width: size.width - 120,
+                    child: SingleChildScrollView(
+                        scrollDirection:
+                        Axis.horizontal,
+                        child: Text(
+                            text,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 25)))),
+                Spacer(),
+              ]))));
 }
 
 TextStyle defaultTextStyle = TextStyle(
@@ -81,4 +126,10 @@ TextStyle defaultTextStyle = TextStyle(
 enum AttachmentPhase{
   before,
   after
+}
+
+extension ParseToString on AttachmentPhase {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
 }

@@ -65,7 +65,7 @@ class JobListingScreen extends StatelessWidget {
                         width: size.width - 2 * borderWidth,
                         height: size.height - 2 * borderWidth,
                         child: Column(children: <Widget>[
-                          getUserHeader(size, userState),
+                          getUserHeader(size, userState, context),
                           BlocBuilder<ProcessingProgressBloc,
                                   ProcessingProgressState>(
                               builder: (context, progressState) {

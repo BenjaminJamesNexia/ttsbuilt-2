@@ -37,7 +37,7 @@ class AllocateSitePhotoScreen extends StatelessWidget {
                     color: Colors.black,
                     width: size.width,
                     child: Column(children: [
-                      getJobHeader(size, thisJob["details"]["Site"]["Name"]),
+                      getJobHeader(size, thisJob["details"]["Site"]["Name"], context),
                       Expanded(child: Image.file(File(attachment.imagePath))),
                       SizedBox(height: 5),
                       Container(
@@ -53,7 +53,7 @@ class AllocateSitePhotoScreen extends StatelessWidget {
                                 Expanded(child:GestureDetector(
                                     onTap: () {
                                       SimproRepository simproRepo = RepositoryProvider.of<SimproRepository>(context);
-                                      simproRepo.saveJobItemAttachment(attachment, AttachmentPhase.before);
+                                      simproRepo.saveJobItemAttachment(attachment, AttachmentPhase.before, context);
                                       Navigator.of(context).pushNamed(
                                           AppRouter.itemListingPath,
                                           arguments: JobIDs(attachment.companyId, attachment.jobId));
@@ -71,7 +71,7 @@ class AllocateSitePhotoScreen extends StatelessWidget {
                                 Expanded(child: GestureDetector(
                                     onTap: () {
                                       SimproRepository simproRepo = RepositoryProvider.of<SimproRepository>(context);
-                                      simproRepo.saveJobItemAttachment(attachment, AttachmentPhase.after);
+                                      simproRepo.saveJobItemAttachment(attachment, AttachmentPhase.after, context);
                                       Navigator.of(context).pushNamed(
                                           AppRouter.itemListingPath,
                                           arguments: JobIDs(attachment.companyId, attachment.jobId));

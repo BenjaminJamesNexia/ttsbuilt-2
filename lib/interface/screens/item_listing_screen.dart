@@ -89,7 +89,7 @@ class ItemListingScreen extends StatelessWidget {
                     width: size.width - 2 * borderWidth,
                     height: size.height - 2 * borderWidth,
                     child: Column(children: <Widget>[
-                      getJobHeader(size, thisJob["details"]["Site"]["Name"]),
+                      getJobDetailHeader(size, thisJob["details"]["Site"]["Name"], context, JobIDs(companyId, jobId)),
                       SizedBox(height: 8),
                       Container(
                           decoration: BoxDecoration(
@@ -130,6 +130,13 @@ class ItemListingScreen extends StatelessWidget {
 
   Widget getItemListing(var item, Size size, BuildContext context, int jobId){
     if(item.containsKey("iteration") == false) item["iteration"] = "001";
+    List<Widget> attachments = [];
+    if(item.containsKey("note") && item["note"].containsKey("attachments")){
+      for(var attachment in item["note"]["attachments"]){
+        attachments.add(SingleChildScrollView(child: Text(attachment["file-name"],
+            style: TextStyle(color: Colors.white)), scrollDirection: Axis.horizontal,));
+      }
+    }
     return Container(
         decoration: BoxDecoration(
           border: Border.all(width: 2, color: c1_slightly_darker),
@@ -170,10 +177,7 @@ class ItemListingScreen extends StatelessWidget {
                                 maxHeight: (size.height / 8) - 40,
                               ),
                               child: SingleChildScrollView(
-                                  child: Column(children: const [
-                                    Text("test.jpg",
-                                        style: TextStyle(color: Colors.white)),
-                                  ]))),
+                                  child: Column(children: attachments))),
 
                         ])),
                 SizedBox(width: 3),
@@ -181,10 +185,7 @@ class ItemListingScreen extends StatelessWidget {
                     child: SingleChildScrollView(
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text("test.jpg",
-                                  style: TextStyle(color: Colors.white)),
-                            ])))
+                            children: [])))
               ]),
           Container(
               height: 23,
