@@ -41,6 +41,7 @@ class ItemAttachmentScreen extends StatelessWidget {
                     color: Colors.black,
                     width: size.width,
                     child: Column(children: [
+                      getJobDetailHeader(size, thisJob["details"]["Site"]["Name"], context, JobIDs(workNoteID.companyId, workNoteID.jobId)),
                       Text(
                           workNoteID.companyId.toString() +
                               " " +

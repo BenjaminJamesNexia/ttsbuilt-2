@@ -37,7 +37,7 @@ class AllocateSitePhotoScreen extends StatelessWidget {
                     color: Colors.black,
                     width: size.width,
                     child: Column(children: [
-                      getJobHeader(size, thisJob["details"]["Site"]["Name"], context),
+                      getJobDetailHeader(size, thisJob["details"]["Site"]["Name"], context, JobIDs(attachment.companyId, attachment.jobId)),
                       Expanded(child: Image.file(File(attachment.imagePath))),
                       SizedBox(height: 5),
                       Container(

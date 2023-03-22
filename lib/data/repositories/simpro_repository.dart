@@ -166,7 +166,7 @@ class SimproRepository {
     http.Response resp = await oauth2Helper.get(
         'https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/?page=' +
             pageNum.toString() +
-            '&Status.ID=!in(70,12,67,13,142,11)&ID=3000837&pageSize=250',
+            '&Status.ID=!in(70,12,67,13,142,11)&pageSize=250',
         headers: headers);
     List<dynamic> jobsListing = jsonDecode(resp.body);
     Map<String, String> httpHeaders = resp.headers;
@@ -381,7 +381,7 @@ class SimproRepository {
       resp = await oauth2Helper2.get(
           'https://territorytrade.simprosuite.com/api/v1.0/companies/0/jobs/?page=' +
               pageNum.toString() +
-              '&Status.ID=!in(70,12,67,13,142,11)&ID=3000837&pageSize=250',
+              '&Status.ID=!in(70,12,67,13,142,11)&pageSize=250',
           headers: headers);
       jobsListing = jsonDecode(resp.body);
     }
